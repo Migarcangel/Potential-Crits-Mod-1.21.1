@@ -1,5 +1,7 @@
 package com.migar.potentialcrits;
 
+import com.migar.potentialcrits.enchantment.ModEnchantmentEffects;
+import com.migar.potentialcrits.event.ModEvents;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -54,7 +56,8 @@ public class PotentialCrits {
             .alwaysEdible().nutrition(1).saturationModifier(2f).build()));
 
     // Creates a creative tab with the id "potentialcrits:example_tab" for the example item, that is placed after the combat tab
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB =
+            CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.potentialcrits")) //The language key for the title of your CreativeModeTab
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
@@ -74,6 +77,12 @@ public class PotentialCrits {
         ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
+
+        // Register Events
+        NeoForge.EVENT_BUS.register(ModEvents.class);
+
+        // Register Enchantments
+        ModEnchantmentEffects.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
