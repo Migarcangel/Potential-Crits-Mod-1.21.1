@@ -12,7 +12,12 @@ public class CritRegistry {
     static {
         register(new FireCritEffect());
         register(new ThunderCritEffect());
+        register(new ShieldCritEffect());
+        register(new WaterCritEffect());
         register(new DarkCritEffect());
+        register(new LightCritEffect());
+        register(new GroundCritEffect());
+        register(new TrueCritEffect());
         // Añadir más aquí
     }
 

@@ -1,5 +1,6 @@
 package com.migar.potentialcrits;
 
+import com.migar.potentialcrits.effect.ModEffects;
 import com.migar.potentialcrits.enchantment.ModEnchantmentEffects;
 import com.migar.potentialcrits.event.ModEvents;
 import org.slf4j.Logger;
@@ -80,6 +81,8 @@ public class PotentialCrits {
 
         // Register Events
         NeoForge.EVENT_BUS.register(ModEvents.class);
+
+        ModEffects.register(modEventBus);
 
         // Register Enchantments
         ModEnchantmentEffects.register(modEventBus);

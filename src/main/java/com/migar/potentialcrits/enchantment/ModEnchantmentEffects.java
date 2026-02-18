@@ -1,10 +1,7 @@
 package com.migar.potentialcrits.enchantment;
 
 import com.migar.potentialcrits.PotentialCrits;
-import com.migar.potentialcrits.enchantment.effects.DarkCritEnchantmentEffect;
-import com.migar.potentialcrits.enchantment.effects.FireCritEnchantmentEffect;
-import com.migar.potentialcrits.enchantment.effects.LightCritEnchantmentEffect;
-import com.migar.potentialcrits.enchantment.effects.ThunderCritEnchantmentEffect;
+import com.migar.potentialcrits.enchantment.effects.*;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
@@ -28,6 +25,21 @@ public class ModEnchantmentEffects {
 
     public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> LIGHT_CRIT =
             ENTITY_ENCHANTMENT_EFFECTS.register("light_crit", () -> LightCritEnchantmentEffect.CODEC);
+
+    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> GROUND_CRIT =
+            ENTITY_ENCHANTMENT_EFFECTS.register("ground_crit", () -> GroundCritEnchantmentEffect.CODEC);
+
+    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> WATER_CRIT =
+            ENTITY_ENCHANTMENT_EFFECTS.register("water_crit", () -> WaterCritEnchantmentEffect.CODEC);
+
+    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> SUPER_CRIT =
+            ENTITY_ENCHANTMENT_EFFECTS.register("super_crit", () -> SuperCritEnchantmentEffect.CODEC);
+
+    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> TRUE_CRIT =
+            ENTITY_ENCHANTMENT_EFFECTS.register("true_crit", () -> TrueCritEnchantmentEffect.CODEC);
+
+    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> SHIELD_CRIT =
+            ENTITY_ENCHANTMENT_EFFECTS.register("shield_crit", () -> ShieldCritEnchantmentEffect.CODEC);
 
     public static void register (IEventBus eventBus) {
         ENTITY_ENCHANTMENT_EFFECTS.register(eventBus);

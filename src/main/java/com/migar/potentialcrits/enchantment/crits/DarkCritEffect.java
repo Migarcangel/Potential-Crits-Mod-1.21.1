@@ -21,7 +21,7 @@ public class DarkCritEffect implements CritEffect {
 
         if (player.level().random.nextFloat() < chance) {
             float damage = event.getNewDamage();
-            float newDamage = 0;
+            float newDamage;
 
             boolean undead = target.getType().is(EntityTypeTags.UNDEAD);
 

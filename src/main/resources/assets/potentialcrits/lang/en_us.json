@@ -14,5 +14,13 @@
   "enchantment.potentialcrits.fire_crit" : "Fire Crit",
   "enchantment.potentialcrits.thunder_crit" : "Thunder Crit",
   "enchantment.potentialcrits.dark_crit" : "Dark Crit",
-  "enchantment.potentialcrits.light_crit" : "Light Crit"
+  "enchantment.potentialcrits.light_crit" : "Light Crit",
+  "enchantment.potentialcrits.ground_crit" : "Ground Crit",
+  "enchantment.potentialcrits.water_crit" : "Water Crit",
+  "enchantment.potentialcrits.super_crit" : "Super Crit",
+  "enchantment.potentialcrits.true_crit" : "True Crit",
+  "enchantment.potentialcrits.shield_crit" : "Shield Crit",
+
+  "effect.potentialcrits.heavy": "Heavy",
+  "effect.potentialcrits.shielded": "Shielded"
 }
