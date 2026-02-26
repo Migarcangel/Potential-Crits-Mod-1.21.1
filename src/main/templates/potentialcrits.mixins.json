@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.migar.potentialcrits.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "potentialcrits.refmap.json",
+  "mixins": [
+    "LightningBoltMixin"
+  ],
+  "client": [],
+  "server": []
+}

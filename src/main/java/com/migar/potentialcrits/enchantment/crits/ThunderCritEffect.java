@@ -5,12 +5,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-
-import java.util.Objects;
 
 public class ThunderCritEffect implements CritEffect {
     private static final ResourceLocation ID =
@@ -35,12 +34,19 @@ public class ThunderCritEffect implements CritEffect {
         }
 
         if (player.level().random.nextFloat() < chance) {
-            // It may apply 5 additional damage because of the lightning itself. Not consistent though, only sometimes.
-            Objects.requireNonNull(EntityType.LIGHTNING_BOLT.spawn(
+            // It may apply additional damage because of the lightning itself. Not consistent though, only sometimes.
+            LightningBolt lightning = EntityType.LIGHTNING_BOLT.spawn(
                     (ServerLevel) player.level(),
                     target.getOnPos(),
                     MobSpawnType.TRIGGERED
-            )).setVisualOnly(true);
+            );
+
+            if (lightning != null) {
+                // Minimum damage. This is supposed to be unknown
+                lightning.setDamage(0.1f);
+                // Cancels the lightning fire
+                lightning.getPersistentData().putBoolean("potentialcrits_no_fire", true);
+            }
 
             float damage = event.getNewDamage();
             float newDamage = 3;

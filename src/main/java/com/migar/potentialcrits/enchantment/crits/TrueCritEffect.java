@@ -22,7 +22,7 @@ public class TrueCritEffect implements CritEffect {
         if (ModEvents.WAS_CRITICAL.get() && player.level().random.nextFloat() < chance) {
             float damage = event.getOriginalDamage();
 
-            float trueDamage = damage * 0.2f * level;
+            float trueDamage = damage * 0.04f * level;
 
             float newHealth = Math.max(target.getHealth() - trueDamage, 0);
             target.setHealth(newHealth);

@@ -2,8 +2,10 @@ package com.migar.potentialcrits.event;
 
 import com.migar.potentialcrits.PotentialCrits;
 import com.migar.potentialcrits.effect.ModEffects;
+import com.migar.potentialcrits.enchantment.ModEnchantments;
 import com.migar.potentialcrits.enchantment.crits.CritEffect;
 import com.migar.potentialcrits.enchantment.crits.CritRegistry;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -14,9 +16,15 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.ItemCost;
+import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -25,7 +33,9 @@ import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
+import java.util.List;
 import java.util.Objects;
 
 @EventBusSubscriber(modid = PotentialCrits.MODID)
@@ -75,6 +85,8 @@ public class ModEvents {
 
         if (level > 0 && player.level().random.nextFloat() < chance) {
             event.setDamageMultiplier(2.0f);
+            LivingEntity target = event.getEntity();
+            target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,60,0));
         }
     }
 
@@ -169,6 +181,47 @@ public class ModEvents {
         double factor = 0.7 - (amplifier * 0.15);
 
         entity.setDeltaMovement(v.x, v.y * factor, v.z);
+    }
+
+    @SubscribeEvent
+    public static void addCustomTrades(VillagerTradesEvent event) {
+        if(event.getType() == VillagerProfession.CLERIC) {
+            Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
+
+            // Light Crit Level 3
+            trades.get(3).add((entity, randomSource) -> {
+                var enchantmentRegistry = entity.level().registryAccess()
+                        .lookup(Registries.ENCHANTMENT).orElseThrow();
+
+                var lightCrit = enchantmentRegistry.get(ModEnchantments.LIGHT_CRIT).orElseThrow();
+
+                ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
+                book.enchant(lightCrit, 3);
+
+                return new MerchantOffer(
+                        new ItemCost(Items.EMERALD, 30),
+                        book,
+                        12, 10, 0.05f
+                );
+            });
+
+            // Light Crit Level 4
+            trades.get(5).add((entity, randomSource) -> {
+                var enchantmentRegistry = entity.level().registryAccess()
+                        .lookup(Registries.ENCHANTMENT).orElseThrow();
+
+                var lightCrit = enchantmentRegistry.get(ModEnchantments.LIGHT_CRIT).orElseThrow();
+
+                ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
+                book.enchant(lightCrit, 4);
+
+                return new MerchantOffer(
+                        new ItemCost(Items.EMERALD, 45),
+                        book,
+                        8, 15, 0.05f
+                );
+            });
+        }
     }
 }
 

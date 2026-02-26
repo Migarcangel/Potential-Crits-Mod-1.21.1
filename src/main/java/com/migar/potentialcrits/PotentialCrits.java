@@ -3,6 +3,7 @@ package com.migar.potentialcrits;
 import com.migar.potentialcrits.effect.ModEffects;
 import com.migar.potentialcrits.enchantment.ModEnchantmentEffects;
 import com.migar.potentialcrits.event.ModEvents;
+import com.migar.potentialcrits.loot.ModLootModifiers;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -86,6 +87,9 @@ public class PotentialCrits {
 
         // Register Enchantments
         ModEnchantmentEffects.register(modEventBus);
+
+        // Register Loot Modifiers
+        ModLootModifiers.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
