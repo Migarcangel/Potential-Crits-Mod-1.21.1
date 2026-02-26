@@ -9,20 +9,20 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 public class WaterCritEffect implements CritEffect {
     private static final ResourceLocation ID =
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "water_crit");
 
     @Override
-    public void applyEffect(Player player, LivingDamageEvent.Pre event, int level) {
+    public void applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
         LivingEntity target = event.getEntity();
 
         float chance = level * 0.05f;
 
         if (player.isInWaterRainOrBubble() && player.level().random.nextFloat() < chance) {
-            float damage = event.getNewDamage();
+            float damage = event.getAmount();
             float newDamage = damage + 3;
 
             if(target.isInWaterRainOrBubble()) {
@@ -50,7 +50,7 @@ public class WaterCritEffect implements CritEffect {
             else if(depth >= 15 && depth < 30) multiplier += 0.10f;
             else if(depth >= 30) multiplier += 0.15f;
 
-            event.setNewDamage(newDamage * multiplier);
+            event.setAmount(newDamage * multiplier);
 
         }
     }

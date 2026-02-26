@@ -2,7 +2,6 @@ package com.migar.potentialcrits.enchantment.crits;
 
 import com.migar.potentialcrits.PotentialCrits;
 import com.migar.potentialcrits.effect.ModEffects;
-import com.migar.potentialcrits.event.ModEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -10,27 +9,29 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+
+import static com.migar.potentialcrits.event.EventUtils.getEnchantmentLevel;
 
 public class ShieldCritEffect implements CritEffect {
     private static final ResourceLocation ID =
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "shield_crit");
 
     @Override
-    public void applyEffect(Player player, LivingDamageEvent.Pre event, int level) {
+    public void applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
         LivingEntity target = event.getEntity();
 
         float chance = level * 0.2f;
 
         if (player.level().random.nextFloat() < chance) {
-            float damage = event.getNewDamage() + 3;
+            float damage = event.getAmount() + 3;
             int amplifier = 0;
 
             ItemStack shield = player.getOffhandItem();
 
             if (shield.getItem() instanceof net.minecraft.world.item.ShieldItem) {
                 damage += 3;
-                if (ModEvents.getEnchantmentLevel(shield, player, ID) > 0) {
+                if (getEnchantmentLevel(shield, player, ID) > 0) {
                     chance = 0.5f;
                     if (player.level().random.nextFloat() < chance) {
                         amplifier = 1;
@@ -38,7 +39,7 @@ public class ShieldCritEffect implements CritEffect {
                 }
             }
 
-            event.setNewDamage(damage);
+            event.setAmount(damage);
 
             player.addEffect(new MobEffectInstance(ModEffects.SHIELD_EFFECT,200,amplifier));
 

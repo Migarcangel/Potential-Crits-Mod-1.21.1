@@ -7,22 +7,22 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 public class TrueCritEffect implements CritEffect {
     private static final ResourceLocation ID =
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "true_crit");
 
     @Override
-    public void applyEffect(Player player, LivingDamageEvent.Pre event, int level) {
+    public void applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
         LivingEntity target = event.getEntity();
 
-        float chance = level * 0.5f;
+        float chance = level * 0.05f;
 
         if (ModEvents.WAS_CRITICAL.get() && player.level().random.nextFloat() < chance) {
-            float damage = event.getOriginalDamage();
+            float damage = event.getOriginalAmount();
 
-            float trueDamage = damage * 0.04f * level;
+            float trueDamage = damage * 0.05f * level;
 
             float newHealth = Math.max(target.getHealth() - trueDamage, 0);
             target.setHealth(newHealth);

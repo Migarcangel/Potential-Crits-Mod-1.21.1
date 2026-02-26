@@ -6,24 +6,24 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 public class FireCritEffect implements CritEffect {
     private static final ResourceLocation ID =
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "fire_crit");
 
     @Override
-    public void applyEffect(Player player, LivingDamageEvent.Pre event, int level) {
+    public void applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
         float chance = level * 0.05f;
         LivingEntity target = event.getEntity();
 
         if (player.level().random.nextFloat() < chance) {
-            float damage = event.getNewDamage();
+            float damage = event.getAmount();
             float fireTicks = target.getRemainingFireTicks();
             if(fireTicks > 0) {
                 float newDamage = fireTicks/20.0f;
                 target.clearFire();
-                event.setNewDamage(damage + newDamage);
+                event.setAmount(damage + newDamage);
 
                 player.level().playSound(
                         null,

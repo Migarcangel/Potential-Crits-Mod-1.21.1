@@ -9,14 +9,14 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 public class ThunderCritEffect implements CritEffect {
     private static final ResourceLocation ID =
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "thunder_crit");
 
     @Override
-    public void applyEffect(Player player, LivingDamageEvent.Pre event, int level) {
+    public void applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
         LivingEntity target = event.getEntity();
 
         BlockPos pos = target.blockPosition().above();
@@ -48,12 +48,12 @@ public class ThunderCritEffect implements CritEffect {
                 lightning.getPersistentData().putBoolean("potentialcrits_no_fire", true);
             }
 
-            float damage = event.getNewDamage();
+            float damage = event.getAmount();
             float newDamage = 3;
             if(thunder) {
                 newDamage = 4.5f;
             }
-            event.setNewDamage(damage + newDamage);
+            event.setAmount(damage + newDamage);
 
         }
     }
