@@ -1,0 +1,14 @@
+{
+  "values": [
+    "potentialcrits:dark_crit",
+    "potentialcrits:light_crit",
+    "potentialcrits:ground_crit",
+    "potentialcrits:water_crit",
+    "potentialcrits:super_crit",
+    "potentialcrits:true_crit",
+    "potentialcrits:shield_crit",
+    "potentialcrits:berserk_crit",
+    "potentialcrits:smash_crit",
+    "potentialcrits:umbral_crit"
+  ]
+}

@@ -41,6 +41,15 @@ public class ModEnchantmentEffects {
     public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> SHIELD_CRIT =
             ENTITY_ENCHANTMENT_EFFECTS.register("shield_crit", () -> ShieldCritEnchantmentEffect.CODEC);
 
+    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> BERSERK_CRIT =
+            ENTITY_ENCHANTMENT_EFFECTS.register("berserk_crit", () -> BerserkCritEnchantmentEffect.CODEC);
+
+    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> SMASH_CRIT =
+            ENTITY_ENCHANTMENT_EFFECTS.register("smash_crit", () -> SmashCritEnchantmentEffect.CODEC);
+
+    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> UMBRAL_CRIT =
+            ENTITY_ENCHANTMENT_EFFECTS.register("umbral_crit", () -> UmbralCritEnchantmentEffect.CODEC);
+
     public static void register (IEventBus eventBus) {
         ENTITY_ENCHANTMENT_EFFECTS.register(eventBus);
     }

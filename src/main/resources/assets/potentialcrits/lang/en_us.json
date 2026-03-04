@@ -20,7 +20,11 @@
   "enchantment.potentialcrits.super_crit" : "Super Crit",
   "enchantment.potentialcrits.true_crit" : "True Crit",
   "enchantment.potentialcrits.shield_crit" : "Shield Crit",
+  "enchantment.potentialcrits.berserk_crit" : "Berserk Crit",
+  "enchantment.potentialcrits.smash_crit" : "Smash Crit",
+  "enchantment.potentialcrits.umbral_crit" : "Umbral Crit",
 
   "effect.potentialcrits.heavy": "Heavy",
-  "effect.potentialcrits.shielded": "Shielded"
+  "effect.potentialcrits.shielded": "Shielded",
+  "effect.potentialcrits.berserker": "Berserker"
 }

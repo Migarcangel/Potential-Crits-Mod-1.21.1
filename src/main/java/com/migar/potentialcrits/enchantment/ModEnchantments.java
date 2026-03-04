@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentTarget;
@@ -41,9 +42,21 @@ public class ModEnchantments {
     public static final ResourceKey<Enchantment> SHIELD_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "shield_crit"));
 
+    public static final ResourceKey<Enchantment> BERSERK_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
+            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "berserk_crit"));
+
+    public static final ResourceKey<Enchantment> SMASH_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
+            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "smash_crit"));
+
+    public static final ResourceKey<Enchantment> UMBRAL_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
+            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "umbral_crit"));
+
     public static void bootstrap(BootstrapContext<Enchantment> context) {
         var enchantments = context.lookup(Registries.ENCHANTMENT);
         var items = context.lookup(Registries.ITEM);
+
+        TagKey<Item> NO_ITEMS = TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "no_items"));
 
         // FIRE CRIT
         register(context, FIRE_CRIT, Enchantment.enchantment(Enchantment.definition(
@@ -75,7 +88,7 @@ public class ModEnchantments {
         register(context, DARK_CRIT, Enchantment.enchantment(Enchantment.definition(
                         items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                         items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        4,
+                        40,
                         5,
                         Enchantment.dynamicCost(10, 7),
                         Enchantment.dynamicCost(20, 7),
@@ -88,7 +101,7 @@ public class ModEnchantments {
         register(context, LIGHT_CRIT, Enchantment.enchantment(Enchantment.definition(
                         items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                         items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        4,
+                        40,
                         5,
                         Enchantment.dynamicCost(10, 7),
                         Enchantment.dynamicCost(20, 7),
@@ -101,7 +114,7 @@ public class ModEnchantments {
         register(context, GROUND_CRIT, Enchantment.enchantment(Enchantment.definition(
                         items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                         items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        4,
+                        40,
                         1,
                         Enchantment.dynamicCost(10, 7),
                         Enchantment.dynamicCost(20, 7),
@@ -114,7 +127,7 @@ public class ModEnchantments {
         register(context, WATER_CRIT, Enchantment.enchantment(Enchantment.definition(
                         items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                         items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        4,
+                        40,
                         3,
                         Enchantment.dynamicCost(10, 7),
                         Enchantment.dynamicCost(20, 7),
@@ -127,7 +140,7 @@ public class ModEnchantments {
         register(context, SUPER_CRIT, Enchantment.enchantment(Enchantment.definition(
                         items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                         items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        4,
+                        400,
                         1,
                         Enchantment.dynamicCost(10, 7),
                         Enchantment.dynamicCost(20, 7),
@@ -150,8 +163,7 @@ public class ModEnchantments {
                         EnchantmentTarget.VICTIM, new TrueCritEnchantmentEffect()));
 
         // SHIELD CRIT
-        register(context, SHIELD_CRIT, Enchantment.enchantment(
-                        Enchantment.definition(
+        register(context, SHIELD_CRIT, Enchantment.enchantment(Enchantment.definition(
                                 items.getOrThrow(TagKey.create(Registries.ITEM,
                                         ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "enchantable/sword_shield"))),
                                 4,
@@ -161,13 +173,53 @@ public class ModEnchantments {
                                 4,
                                 EquipmentSlotGroup.MAINHAND
                         ))
-                .withEffect(
-                        EnchantmentEffectComponents.POST_ATTACK,
-                        EnchantmentTarget.ATTACKER,
-                        EnchantmentTarget.VICTIM,
-                        new ShieldCritEnchantmentEffect()
-                )
-        );
+                .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
+                        EnchantmentTarget.VICTIM, new ShieldCritEnchantmentEffect()));
+
+        // BERSERK CRIT
+        register(context, BERSERK_CRIT , Enchantment.enchantment(
+                        Enchantment.definition(
+                                items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                                items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+                                4,
+                                1,
+                                Enchantment.dynamicCost(10, 7),
+                                Enchantment.dynamicCost(20, 7),
+                                4,
+                                EquipmentSlotGroup.MAINHAND
+                        ))
+                .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
+                        EnchantmentTarget.VICTIM, new BerserkCritEnchantmentEffect()));
+
+        // SMASH CRIT
+        register(context, SMASH_CRIT , Enchantment.enchantment(
+                        Enchantment.definition(
+                                items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                                items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+                                4,
+                                4,
+                                Enchantment.dynamicCost(10, 7),
+                                Enchantment.dynamicCost(20, 7),
+                                4,
+                                EquipmentSlotGroup.MAINHAND
+                        ))
+                .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
+                        EnchantmentTarget.VICTIM, new SmashCritEnchantmentEffect()));
+
+        // UMBRAL CRIT
+        register(context, UMBRAL_CRIT , Enchantment.enchantment(
+                        Enchantment.definition(
+                                items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                                items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+                                4,
+                                3,
+                                Enchantment.dynamicCost(10, 7),
+                                Enchantment.dynamicCost(20, 7),
+                                4,
+                                EquipmentSlotGroup.MAINHAND
+                        ))
+                .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
+                        EnchantmentTarget.VICTIM, new UmbralCritEnchantmentEffect()));
     }
 
     private static void register(BootstrapContext<Enchantment> registry, ResourceKey<Enchantment> key,

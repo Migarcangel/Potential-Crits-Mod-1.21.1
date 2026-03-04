@@ -24,6 +24,12 @@ public class ModEffects {
     public static final Holder<MobEffect> SHIELD_EFFECT = MOB_EFFECTS.register("shielded",
             () -> new ShieldEffect(MobEffectCategory.BENEFICIAL, 0x36ebab));
 
+    public static final Holder<MobEffect> BERSERKER_EFFECT = MOB_EFFECTS.register("berserker",
+            () -> new BerserkerEffect(MobEffectCategory.BENEFICIAL, 0x36ebab)
+                    .addAttributeModifier(Attributes.ATTACK_DAMAGE,
+                            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "berserker"), 0.25f,
+                            AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+
 
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);

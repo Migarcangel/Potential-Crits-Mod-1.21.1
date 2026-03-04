@@ -43,6 +43,8 @@ public class ShieldCritEffect implements CritEffect {
 
             player.addEffect(new MobEffectInstance(ModEffects.SHIELD_EFFECT,200,amplifier));
 
+            playGenericCritSound(player, target);
+
             player.level().playSound(
                     null,
                     target.getX(), target.getY(), target.getZ(),
@@ -52,14 +54,6 @@ public class ShieldCritEffect implements CritEffect {
                     1.0f + player.level().random.nextFloat() * 0.2f
             );
 
-            player.level().playSound(
-                    null,
-                    target.getX(), target.getY(), target.getZ(),
-                    SoundEvents.PLAYER_ATTACK_CRIT,
-                    SoundSource.PLAYERS,
-                    0.9f,
-                    0.6f
-            );
 
         }
     }

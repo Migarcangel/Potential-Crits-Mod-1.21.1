@@ -18,7 +18,10 @@ public class CritRegistry {
         register(new LightCritEffect());
         register(new GroundCritEffect());
         register(new TrueCritEffect());
-        // Añadir más aquí
+        register(new BerserkCritEffect());
+        register(new SmashCritEffect());
+        register(new UmbralCritEffect());
+        // Add more here
     }
 
     public static void register(CritEffect effect) {

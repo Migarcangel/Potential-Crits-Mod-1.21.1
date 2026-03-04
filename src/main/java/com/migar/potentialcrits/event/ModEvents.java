@@ -10,9 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.living.LivingEvent;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
+import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
@@ -78,5 +76,12 @@ public class ModEvents {
     public static void addCustomTrades(VillagerTradesEvent event) {
         TradingEvents.addCustomTrades(event);
     }
+
+    @SubscribeEvent
+    public static void onEffectExpired(MobEffectEvent.Expired event) {BerserkEvents.onEffectExpired(event);}
+
+    // Curación al matar enemigos
+    @SubscribeEvent
+    public static void onKill(LivingDeathEvent event) {BerserkEvents.onKill(event);}
 }
 
