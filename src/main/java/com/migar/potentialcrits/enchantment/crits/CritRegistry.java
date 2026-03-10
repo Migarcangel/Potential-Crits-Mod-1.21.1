@@ -10,19 +10,20 @@ public class CritRegistry {
     private static final Map<ResourceLocation, CritEffect> CRIT_EFFECTS = new HashMap<>();
 
     static {
+        // If crits are not in this list, ModEvents won't trigger them.
         register(new SuperCritEffect());
         register(new FireCritEffect());
         register(new ThunderCritEffect());
+        register(new UmbralCritEffect());
         register(new ShieldCritEffect());
+        register(new BerserkCritEffect());
+        register(new SmashCritEffect());
         register(new WaterCritEffect());
         register(new DarkCritEffect());
         register(new LightCritEffect());
         register(new GroundCritEffect());
         register(new TrueCritEffect());
-        register(new BerserkCritEffect());
-        register(new SmashCritEffect());
-        register(new UmbralCritEffect());
-        // Add more here
+        // Add more here.
     }
 
     public static void register(CritEffect effect) {
