@@ -1,0 +1,8 @@
+{
+  "values": [
+    "potentialcrits:ground_crit",
+    "potentialcrits:super_crit",
+    "potentialcrits:true_crit",
+    "potentialcrits:smash_crit"
+  ]
+}

@@ -1,46 +1,25 @@
 package com.migar.potentialcrits.enchantment.crits;
 
 import com.migar.potentialcrits.PotentialCrits;
+import com.migar.potentialcrits.event.ModEvents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
-public class DarkCritEffect implements CritEffect {
+public class SuperCritEffect implements CritEffect {
     private static final ResourceLocation ID =
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "dark_crit");
+            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "super_crit");
 
     @Override
     public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
-        LivingEntity target = event.getEntity();
-
-        float chance = level * 0.05f;
-
-        if (player.level().random.nextFloat() < chance) {
-            float damage = event.getAmount();
-            float newDamage;
-
-            boolean undead = target.getType().is(EntityTypeTags.UNDEAD);
-
-            if(!undead) {
-                newDamage = damage * 1.25f;
-            } else {
-                newDamage = damage * 0.90f;
-            }
-            event.setAmount(newDamage);
-
-            target.addEffect(new MobEffectInstance(MobEffects.DARKNESS,60,0));
-            return true;
-
-        }
-        return false;
+        // This crit is implemented in ModEvents in the event onCriticalHit.
+        // Returns only to increment CritsApplied in ModEvents.
+        return ModEvents.WAS_SUPER_CRIT.get();
     }
 
     @Override
@@ -48,13 +27,13 @@ public class DarkCritEffect implements CritEffect {
 
         if (target.level() instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(
-                    ParticleTypes.WITCH,
+                    ParticleTypes.FIREWORK,
                     target.getX(),
                     target.getY() + 0.9,
                     target.getZ(),
                     40,
                     0.6,
-                    1,
+                    0.4,
                     0.6,
                     0.02
             );
@@ -62,10 +41,10 @@ public class DarkCritEffect implements CritEffect {
         target.level().playSound(
                 null,
                 target.getX(), target.getY(), target.getZ(),
-                SoundEvents.EVOKER_CAST_SPELL,
+                SoundEvents.DRAGON_FIREBALL_EXPLODE,
                 SoundSource.PLAYERS,
                 0.7F,
-                0.85f + target.level().random.nextFloat() * 0.2f
+                1.5f + target.level().random.nextFloat() * 0.2f
         );
     }
 

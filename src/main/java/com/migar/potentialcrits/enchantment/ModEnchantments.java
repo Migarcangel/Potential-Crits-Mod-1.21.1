@@ -15,6 +15,7 @@ import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentTarget;
 
 public class ModEnchantments {
+    // ResourceKeys
     public static final ResourceKey<Enchantment> FIRE_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "fire_crit"));
 
@@ -51,165 +52,204 @@ public class ModEnchantments {
     public static final ResourceKey<Enchantment> UMBRAL_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "umbral_crit"));
 
+    // Item Tags
+    public static final TagKey<Item> SWORD_SHIELD =
+            TagKey.create(Registries.ITEM,
+                    ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "enchantable/sword_shield"));
+
+    public static final TagKey<Item> SWORD_TRIDENT =
+            TagKey.create(Registries.ITEM,
+                    ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "enchantable/sword_trident"));
+
+    public static final TagKey<Item> SWORD_AXE =
+            TagKey.create(Registries.ITEM,
+                    ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "enchantable/sword_axe"));
+
+    public static final TagKey<Item> SWORD_AXE_PICKAXE_SHOVEL =
+            TagKey.create(Registries.ITEM,
+                    ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "enchantable/sword_axe_pickaxe_shovel"));
+
+    public static final TagKey<Item> SWORD_AXE_TRIDENT =
+            TagKey.create(Registries.ITEM,
+                    ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "enchantable/sword_axe_trident"));
+
+    public static final TagKey<Item> SWORD_AXE_TRIDENT_MACE =
+            TagKey.create(Registries.ITEM,
+                    ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "enchantable/sword_axe_trident_mace"));
+
+    public static final TagKey<Item> AXE_MACE =
+            TagKey.create(Registries.ITEM,
+                    ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "enchantable/axe_mace"));
+
     public static void bootstrap(BootstrapContext<Enchantment> context) {
         var enchantments = context.lookup(Registries.ENCHANTMENT);
         var items = context.lookup(Registries.ITEM);
 
-        TagKey<Item> NO_ITEMS = TagKey.create(Registries.ITEM,
-                ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "no_items"));
-
         // FIRE CRIT
         register(context, FIRE_CRIT, Enchantment.enchantment(Enchantment.definition(
-                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                         items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        4,
+                        items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+                        1,
                         2,
-                        Enchantment.dynamicCost(10, 7),
-                        Enchantment.dynamicCost(20, 7),
+                        Enchantment.dynamicCost(10, 10),
+                        Enchantment.dynamicCost(20, 10),
                         4,
                         EquipmentSlotGroup.MAINHAND))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.FIRE_WATER_EXCLUSIVE))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.FIRE_UMBRAL_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new FireCritEnchantmentEffect()));
 
         // THUNDER CRIT
         register(context, THUNDER_CRIT, Enchantment.enchantment(Enchantment.definition(
-                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                        items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        4,
+                        items.getOrThrow(SWORD_TRIDENT),
+                        items.getOrThrow(SWORD_TRIDENT),
+                        3,
                         2,
-                        Enchantment.dynamicCost(10, 7),
-                        Enchantment.dynamicCost(20, 7),
+                        Enchantment.dynamicCost(10, 10),
+                        Enchantment.dynamicCost(20, 10),
                         4,
                         EquipmentSlotGroup.MAINHAND))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.THUNDER_UMBRAL_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new ThunderCritEnchantmentEffect()));
 
         // DARK CRIT
         register(context, DARK_CRIT, Enchantment.enchantment(Enchantment.definition(
-                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                        items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        40,
+                        items.getOrThrow(SWORD_AXE_TRIDENT_MACE),
+                        items.getOrThrow(SWORD_AXE_TRIDENT_MACE),
+                        2,
                         5,
-                        Enchantment.dynamicCost(10, 7),
-                        Enchantment.dynamicCost(20, 7),
+                        Enchantment.dynamicCost(15, 10),
+                        Enchantment.dynamicCost(30, 10),
                         4,
                         EquipmentSlotGroup.MAINHAND))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.DARK_LIGHT_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new DarkCritEnchantmentEffect()));
 
         // LIGHT CRIT
         register(context, LIGHT_CRIT, Enchantment.enchantment(Enchantment.definition(
-                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                        items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        40,
+                        items.getOrThrow(SWORD_AXE_TRIDENT_MACE),
+                        items.getOrThrow(SWORD_AXE_TRIDENT_MACE),
+                        2,
                         5,
-                        Enchantment.dynamicCost(10, 7),
-                        Enchantment.dynamicCost(20, 7),
+                        Enchantment.dynamicCost(15, 10),
+                        Enchantment.dynamicCost(30, 10),
                         4,
                         EquipmentSlotGroup.MAINHAND))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.DARK_LIGHT_EXCLUSIVE))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.LIGHT_UMBRAL_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new LightCritEnchantmentEffect()));
 
         // GROUND CRIT
         register(context, GROUND_CRIT, Enchantment.enchantment(Enchantment.definition(
-                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                        items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        40,
+                        items.getOrThrow(SWORD_AXE_PICKAXE_SHOVEL),
+                        items.getOrThrow(SWORD_AXE_PICKAXE_SHOVEL),
+                        2,
                         1,
-                        Enchantment.dynamicCost(10, 7),
                         Enchantment.dynamicCost(20, 7),
-                        4,
+                        Enchantment.dynamicCost(30, 7),
+                        10,
                         EquipmentSlotGroup.MAINHAND))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.GROUND_SUPER_TRUE_SMASH_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new GroundCritEnchantmentEffect()));
 
         // WATER CRIT
         register(context, WATER_CRIT, Enchantment.enchantment(Enchantment.definition(
-                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                        items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        40,
+                        items.getOrThrow(SWORD_TRIDENT),
+                        items.getOrThrow(SWORD_TRIDENT),
+                        4,
                         3,
                         Enchantment.dynamicCost(10, 7),
                         Enchantment.dynamicCost(20, 7),
                         4,
                         EquipmentSlotGroup.MAINHAND))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.FIRE_WATER_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new WaterCritEnchantmentEffect()));
 
         // SUPER CRIT
         register(context, SUPER_CRIT, Enchantment.enchantment(Enchantment.definition(
-                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                        items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        400,
+                        items.getOrThrow(SWORD_AXE_TRIDENT_MACE),
+                        items.getOrThrow(SWORD_AXE_TRIDENT_MACE),
                         1,
-                        Enchantment.dynamicCost(10, 7),
-                        Enchantment.dynamicCost(20, 7),
-                        4,
+                        5,
+                        Enchantment.dynamicCost(15, 10),
+                        Enchantment.dynamicCost(30, 10),
+                        6,
                         EquipmentSlotGroup.MAINHAND))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.GROUND_SUPER_TRUE_SMASH_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new SuperCritEnchantmentEffect()));
 
         // TRUE CRIT
         register(context, TRUE_CRIT, Enchantment.enchantment(Enchantment.definition(
-                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                        items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        4,
+                        items.getOrThrow(SWORD_AXE_TRIDENT),
+                        items.getOrThrow(SWORD_AXE_TRIDENT),
                         5,
-                        Enchantment.dynamicCost(10, 7),
-                        Enchantment.dynamicCost(20, 7),
-                        4,
+                        5,
+                        Enchantment.dynamicCost(15, 10),
+                        Enchantment.dynamicCost(30, 10),
+                        6,
                         EquipmentSlotGroup.MAINHAND))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.GROUND_SUPER_TRUE_SMASH_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new TrueCritEnchantmentEffect()));
 
         // SHIELD CRIT
         register(context, SHIELD_CRIT, Enchantment.enchantment(Enchantment.definition(
-                                items.getOrThrow(TagKey.create(Registries.ITEM,
-                                        ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "enchantable/sword_shield"))),
-                                4,
+                        items.getOrThrow(SWORD_SHIELD),
+                        items.getOrThrow(SWORD_SHIELD),
+                                2,
                                 1,
-                                Enchantment.dynamicCost(10, 7),
-                                Enchantment.dynamicCost(20, 7),
-                                4,
+                        Enchantment.dynamicCost(20, 7),
+                        Enchantment.dynamicCost(30, 7),
+                        10,
                                 EquipmentSlotGroup.MAINHAND
                         ))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.SHIELD_BERSERK_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new ShieldCritEnchantmentEffect()));
 
         // BERSERK CRIT
         register(context, BERSERK_CRIT , Enchantment.enchantment(
                         Enchantment.definition(
-                                items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                                items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                                4,
+                                items.getOrThrow(SWORD_AXE),
+                                items.getOrThrow(SWORD_AXE),
+                                2,
                                 1,
-                                Enchantment.dynamicCost(10, 7),
                                 Enchantment.dynamicCost(20, 7),
-                                4,
+                                Enchantment.dynamicCost(30, 7),
+                                10,
                                 EquipmentSlotGroup.MAINHAND
                         ))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.SHIELD_BERSERK_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new BerserkCritEnchantmentEffect()));
 
         // SMASH CRIT
         register(context, SMASH_CRIT , Enchantment.enchantment(
                         Enchantment.definition(
-                                items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                                items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+                                items.getOrThrow(SWORD_AXE),
+                                items.getOrThrow(SWORD_AXE),
+                                1,
                                 4,
-                                4,
-                                Enchantment.dynamicCost(10, 7),
-                                Enchantment.dynamicCost(20, 7),
-                                4,
+                                Enchantment.dynamicCost(15, 10),
+                                Enchantment.dynamicCost(30, 10),
+                                5,
                                 EquipmentSlotGroup.MAINHAND
                         ))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.GROUND_SUPER_TRUE_SMASH_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new SmashCritEnchantmentEffect()));
 
         // UMBRAL CRIT
         register(context, UMBRAL_CRIT , Enchantment.enchantment(
                         Enchantment.definition(
-                                items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                                items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
                                 items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
                                 4,
                                 3,
@@ -218,6 +258,9 @@ public class ModEnchantments {
                                 4,
                                 EquipmentSlotGroup.MAINHAND
                         ))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.FIRE_UMBRAL_EXCLUSIVE))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.THUNDER_UMBRAL_EXCLUSIVE))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.LIGHT_UMBRAL_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new UmbralCritEnchantmentEffect()));
     }

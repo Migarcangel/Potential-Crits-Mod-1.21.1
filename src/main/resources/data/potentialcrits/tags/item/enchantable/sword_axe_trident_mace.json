@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:swords",
+    "#minecraft:axes",
+    "minecraft:trident",
+    "minecraft:mace",
+
+    {
+      "id": "#forge:tools/tridents",
+      "required": false
+    },
+    {
+      "id": "#c:tools/tridents",
+      "required": false
+    }
+  ,
+    {
+      "id": "#forge:tools/maces",
+      "required": false
+    },
+    {
+      "id": "#c:tools/maces",
+      "required": false
+    }
+  ]
+}

@@ -2,7 +2,9 @@ package com.migar.potentialcrits.enchantment.crits;
 
 import com.migar.potentialcrits.PotentialCrits;
 import com.migar.potentialcrits.effect.ModEffects;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -16,8 +18,7 @@ public class BerserkCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "berserk_crit");
 
     @Override
-    public void applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
-        LivingEntity target = event.getEntity();
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
 
         float chance = level * 0.15f;
 
@@ -43,26 +44,47 @@ public class BerserkCritEffect implements CritEffect {
             event.setAmount(damage);
 
             player.addEffect(new MobEffectInstance(ModEffects.BERSERKER_EFFECT,duration,0));
-
-            player.level().playSound(
-                    null,
-                    target.getX(), target.getY(), target.getZ(),
-                    SoundEvents.ANVIL_PLACE,
-                    SoundSource.PLAYERS,
-                    1.0f,
-                    1.0f + player.level().random.nextFloat() * 0.2f
-            );
-
-            player.level().playSound(
-                    null,
-                    target.getX(), target.getY(), target.getZ(),
-                    SoundEvents.PLAYER_ATTACK_CRIT,
-                    SoundSource.PLAYERS,
-                    0.9f,
-                    0.6f
-            );
+            return true;
 
         }
+        return false;
+    }
+
+    @Override
+    public void playSpecialEffects(Player player, LivingEntity target) {
+
+        if (target.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(
+                    ParticleTypes.ANGRY_VILLAGER,
+                    target.getX(),
+                    target.getY() + 0.9,
+                    target.getZ(),
+                    10,
+                    0.5,
+                    0.6,
+                    0.5,
+                    0.02
+            );
+            serverLevel.sendParticles(
+                    ParticleTypes.ANGRY_VILLAGER,
+                    player.getX(),
+                    player.getY() + 0.9,
+                    player.getZ(),
+                    12,
+                    0.5,
+                    0.6,
+                    0.5,
+                    0.02
+            );
+        }
+        target.level().playSound(
+                null,
+                target.getX(), target.getY(), target.getZ(),
+                SoundEvents.ENDER_DRAGON_GROWL,
+                SoundSource.PLAYERS,
+                0.7f,
+                1.2f + target.level().random.nextFloat() * 0.2f
+        );
     }
 
     @Override

@@ -1,7 +1,11 @@
 package com.migar.potentialcrits.enchantment.crits;
 
 import com.migar.potentialcrits.PotentialCrits;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
@@ -11,16 +15,12 @@ public class SmashCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "smash_crit");
 
     @Override
-    public void applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
 
         float chance = level * 0.1f;
         float fallDistance = player.fallDistance;
 
-        if(fallDistance <= 30) {
-            chance += fallDistance/1.5f;
-        } else if (fallDistance > 30) {
-            chance += 0.2f;
-        }
+        chance += Math.min(fallDistance * 0.01f, 0.35f);
 
         if (fallDistance > 3 && player.level().random.nextFloat() < chance) {
             float damage = event.getAmount();
@@ -46,12 +46,52 @@ public class SmashCritEffect implements CritEffect {
             }
 
             // Now, we apply the reduction.
-            newDamage = newDamage * 0.4f;
+            newDamage = newDamage * 0.5f;
 
             event.setAmount(damage + newDamage);
             player.fallDistance = 0;
+            return true;
 
         }
+        return false;
+    }
+
+    @Override
+    public void playSpecialEffects(Player player, LivingEntity target) {
+
+        if (target.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(
+                    ParticleTypes.CLOUD,
+                    target.getX(),
+                    target.getY()+ 0.2,
+                    target.getZ(),
+                    30,
+                    1,
+                    0.2,
+                    1,
+                    0.1
+            );
+            serverLevel.sendParticles(
+                    ParticleTypes.EXPLOSION,
+                    target.getX(),
+                    target.getY() + 0.2,
+                    target.getZ(),
+                    8,
+                    1,
+                    0.2,
+                    1,
+                    0.05
+            );
+        }
+
+        target.level().playSound(
+                null,
+                target.getX(), target.getY(), target.getZ(),
+                SoundEvents.MACE_SMASH_GROUND,
+                SoundSource.PLAYERS,
+                4f,
+                0.8f + target.level().random.nextFloat() * 0.2f
+        );
     }
 
     @Override

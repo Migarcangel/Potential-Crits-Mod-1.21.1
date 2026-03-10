@@ -3,6 +3,7 @@ package com.migar.potentialcrits.event;
 import com.migar.potentialcrits.PotentialCrits;
 import com.migar.potentialcrits.enchantment.crits.CritEffect;
 import com.migar.potentialcrits.enchantment.crits.CritRegistry;
+import com.migar.potentialcrits.enchantment.crits.CritUtils;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,6 +20,7 @@ import static com.migar.potentialcrits.event.EventUtils.getEnchantmentLevel;
 @EventBusSubscriber(modid = PotentialCrits.MODID)
 public class ModEvents {
     public static final ThreadLocal<Boolean> WAS_CRITICAL =  ThreadLocal.withInitial(() -> false);
+    public static final ThreadLocal<Boolean> WAS_SUPER_CRIT =  ThreadLocal.withInitial(() -> false);
 
     @SubscribeEvent
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
@@ -26,7 +28,11 @@ public class ModEvents {
 
         if (!(event.getSource().getEntity() instanceof Player player)) return;
 
+        // Crits will only be applied if damage is superior to 4. This is to avoid click spam.
+        if(event.getAmount() < 4) return ;
+
         ItemStack weapon = player.getMainHandItem();
+        int critsApplied = 0;
 
         // Iterate through ALL registered critical effects
         for (CritEffect critEffect : CritRegistry.getAll()) {
@@ -34,10 +40,19 @@ public class ModEvents {
             int level = getEnchantmentLevel(weapon, player, critEffect.getId());
 
             if (level > 0) {
-                critEffect.applyEffect(player, event, level);
+                if(critEffect.applyEffect(player, event, level)) {
+                    critsApplied += 1;
+                    critEffect.playSpecialEffects(player,event.getEntity());
+                }
             }
         }
+
+        if(critsApplied >= 1) {
+            CritUtils.playGenericCritParticles(event.getEntity());
+            CritUtils.playGenericCritSound(event.getEntity());
+        }
         WAS_CRITICAL.set(false);
+        WAS_SUPER_CRIT.set(false);
     }
 
     @SubscribeEvent
@@ -51,14 +66,17 @@ public class ModEvents {
             event.setCriticalHit(false);
         }
 
-        float chance = 0.25f;
         level = getEnchantmentLevel(player.getMainHandItem(), player, EventUtils.SUPER_CRIT);
+        float chance = 0.05f * level;
 
         if (level > 0 && player.level().random.nextFloat() < chance) {
-            event.setDamageMultiplier(2.0f);
+            float multiplier = 0.1f * level;
+            event.setDamageMultiplier(1.5f + multiplier);
+
             if (event.getTarget() instanceof LivingEntity target) {
                 target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,60,0));
             }
+            WAS_SUPER_CRIT.set(true);
         }
     }
 

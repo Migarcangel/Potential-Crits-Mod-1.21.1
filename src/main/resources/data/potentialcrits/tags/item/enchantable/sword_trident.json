@@ -1,14 +1,15 @@
 {
   "replace": false,
   "values": [
-    "minecraft:shield",
     "#minecraft:swords",
+    "minecraft:trident",
+
     {
-      "id": "#forge:tools/shields",
+      "id": "#forge:tools/tridents",
       "required": false
     },
     {
-      "id": "#c:tools/shields",
+      "id": "#c:tools/tridents",
       "required": false
     }
   ]

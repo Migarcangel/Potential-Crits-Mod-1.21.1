@@ -1,7 +1,11 @@
 package com.migar.potentialcrits.enchantment.crits;
 
 import com.migar.potentialcrits.PotentialCrits;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -14,7 +18,7 @@ public class LightCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "light_crit");
 
     @Override
-    public void applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
         LivingEntity target = event.getEntity();
 
         float chance = level * 0.05f;
@@ -33,8 +37,35 @@ public class LightCritEffect implements CritEffect {
             event.setAmount(newDamage);
 
             target.addEffect(new MobEffectInstance(MobEffects.GLOWING,60,0));
-
+            return true;
         }
+        return false;
+    }
+
+    @Override
+    public void playSpecialEffects(Player player, LivingEntity target) {
+
+        if (target.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(
+                    ParticleTypes.END_ROD,
+                    target.getX(),
+                    target.getY() + 0.9,
+                    target.getZ(),
+                    25,
+                    0.6,
+                    1,
+                    0.6,
+                    0.02
+            );
+        }
+        target.level().playSound(
+                null,
+                target.getX(), target.getY(), target.getZ(),
+                SoundEvents.AMETHYST_BLOCK_CHIME,
+                SoundSource.PLAYERS,
+                2f,
+                1.1f + target.level().random.nextFloat() * 0.2f
+        );
     }
 
     @Override

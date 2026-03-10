@@ -2,7 +2,11 @@ package com.migar.potentialcrits.enchantment.crits;
 
 import com.migar.potentialcrits.PotentialCrits;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,7 +20,7 @@ public class WaterCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "water_crit");
 
     @Override
-    public void applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
         LivingEntity target = event.getEntity();
 
         float chance = level * 0.05f;
@@ -29,11 +33,11 @@ public class WaterCritEffect implements CritEffect {
                 newDamage = newDamage + 3;
             }
 
-            boolean aquatic = target.getType().is(EntityTypeTags.AQUATIC) || target.getType() == EntityType.DROWNED;
             float multiplier = 1.0f;
+            boolean aquatic = target.getType().is(EntityTypeTags.AQUATIC) || target.getType() == EntityType.DROWNED;
 
             if(aquatic) {
-                multiplier += 0.15f;
+                multiplier += 0.10f;
             }
 
             BlockPos pos = player.blockPosition();
@@ -51,8 +55,48 @@ public class WaterCritEffect implements CritEffect {
             else if(depth >= 30) multiplier += 0.15f;
 
             event.setAmount(newDamage * multiplier);
-
+            return true;
         }
+        return false;
+    }
+
+    @Override
+    public void playSpecialEffects(Player player, LivingEntity target) {
+
+        if (target.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(
+                    ParticleTypes.SPLASH,
+                    target.getX(),
+                    target.getY() + 0.9,
+                    target.getZ(),
+                    50,
+                    0.6,
+                    1,
+                    0.6,
+                    0.02
+            );
+            if(target.isUnderWater()) {
+                serverLevel.sendParticles(
+                        ParticleTypes.BUBBLE,
+                        target.getX(),
+                        target.getY() + 0.9,
+                        target.getZ(),
+                        50,
+                        0.6,
+                        1,
+                        0.6,
+                        0.02
+                );
+            }
+        }
+        player.level().playSound(
+                null,
+                target.getX(), target.getY(), target.getZ(),
+                SoundEvents.FISHING_BOBBER_SPLASH,
+                SoundSource.PLAYERS,
+                0.75f,
+                1.0f + player.level().random.nextFloat() * 0.2f
+        );
     }
 
     @Override

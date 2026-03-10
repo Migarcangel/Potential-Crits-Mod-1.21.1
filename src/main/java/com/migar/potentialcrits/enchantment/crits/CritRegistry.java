@@ -10,6 +10,7 @@ public class CritRegistry {
     private static final Map<ResourceLocation, CritEffect> CRIT_EFFECTS = new HashMap<>();
 
     static {
+        register(new SuperCritEffect());
         register(new FireCritEffect());
         register(new ThunderCritEffect());
         register(new ShieldCritEffect());

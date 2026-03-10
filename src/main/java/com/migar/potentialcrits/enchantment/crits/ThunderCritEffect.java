@@ -2,8 +2,11 @@ package com.migar.potentialcrits.enchantment.crits;
 
 import com.migar.potentialcrits.PotentialCrits;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,14 +19,14 @@ public class ThunderCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "thunder_crit");
 
     @Override
-    public void applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
         LivingEntity target = event.getEntity();
 
         BlockPos pos = target.blockPosition().above();
         boolean belowSky = target.level().canSeeSky(pos);
 
         if(!belowSky) { // If target is not below the sky, it won't trigger
-            return;
+            return false;
         }
 
         boolean thunder = player.level().isThundering();
@@ -49,13 +52,39 @@ public class ThunderCritEffect implements CritEffect {
             }
 
             float damage = event.getAmount();
-            float newDamage = 3;
-            if(thunder) {
-                newDamage = 4.5f;
-            }
+            float newDamage = 4;
             event.setAmount(damage + newDamage);
 
+            return true;
+
         }
+        return false;
+    }
+
+    @Override
+    public void playSpecialEffects(Player player, LivingEntity target) {
+        if (target.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(
+                    ParticleTypes.ELECTRIC_SPARK,
+                    target.getX(),
+                    target.getY() + 0.9,
+                    target.getZ(),
+                    28,
+                    0.8,
+                    1.5,
+                    0.8,
+                    0.05
+            );
+        }
+
+        target.level().playSound(
+                null,
+                target.getX(),target.getY(), target.getZ(),
+                SoundEvents.GENERIC_EXTINGUISH_FIRE,
+                SoundSource.NEUTRAL,
+                0.8f,
+                1.0f + target.level().random.nextFloat() * 0.3f
+        );
     }
 
     @Override
