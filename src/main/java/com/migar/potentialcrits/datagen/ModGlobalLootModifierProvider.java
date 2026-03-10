@@ -20,6 +20,15 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
     @Override
     protected void start() {
 
+        this.add("random_crit_library",
+                new AddLootTableModifier(
+                        new LootItemCondition[] {
+                                new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("chests/stronghold_library")).build(),
+                                LootItemRandomChanceCondition.randomChance(0.5f).build()
+                        },
+                        ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "chests/random_crit_library")
+                ));
+
         // FIRE CRIT
         this.add("fire_crit_nether_fortress",
                 new AddLootTableModifier(

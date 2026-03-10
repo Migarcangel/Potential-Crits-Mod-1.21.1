@@ -1,5 +1,7 @@
 {
   "values": [
+    "potentialcrits:fire_crit",
+    "potentialcrits:thunder_crit",
     "potentialcrits:dark_crit",
     "potentialcrits:light_crit",
     "potentialcrits:ground_crit",

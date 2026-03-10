@@ -89,7 +89,7 @@ public class ModEnchantments {
         register(context, FIRE_CRIT, Enchantment.enchantment(Enchantment.definition(
                         items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
                         items.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                        1,
+                        2,
                         2,
                         Enchantment.dynamicCost(10, 10),
                         Enchantment.dynamicCost(20, 10),

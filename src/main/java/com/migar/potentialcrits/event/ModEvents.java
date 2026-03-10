@@ -4,16 +4,20 @@ import com.migar.potentialcrits.PotentialCrits;
 import com.migar.potentialcrits.enchantment.crits.CritEffect;
 import com.migar.potentialcrits.enchantment.crits.CritRegistry;
 import com.migar.potentialcrits.enchantment.crits.CritUtils;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.event.village.WandererTradesEvent;
 
 import static com.migar.potentialcrits.event.EventUtils.getEnchantmentLevel;
 
@@ -31,7 +35,18 @@ public class ModEvents {
         // Crits will only be applied if damage is superior to 4. This is to avoid click spam.
         if(event.getAmount() < 4) return ;
 
+        DamageSource damageSource = event.getSource();
         ItemStack weapon = player.getMainHandItem();
+
+        // Verify if damage is from thrown trident.
+        boolean isTridentDamage = damageSource.is( DamageTypeTags.IS_PROJECTILE) &&
+                damageSource.getDirectEntity() instanceof ThrownTrident;
+
+        if(isTridentDamage) {
+            ThrownTrident trident = (ThrownTrident) damageSource.getDirectEntity();
+            weapon = trident.getPickupItemStackOrigin();
+        }
+
         int critsApplied = 0;
 
         // Iterate through ALL registered critical effects
@@ -91,9 +106,10 @@ public class ModEvents {
     }
 
     @SubscribeEvent
-    public static void addCustomTrades(VillagerTradesEvent event) {
-        TradingEvents.addCustomTrades(event);
-    }
+    public static void addCustomTrades(VillagerTradesEvent event) {TradingEvents.addCustomTrades(event);}
+
+    @SubscribeEvent
+    public static void addCustomWanderingTraderTrades(WandererTradesEvent event) {WanderingTradingEvents.addWanderingTraderTrades(event);}
 
     @SubscribeEvent
     public static void onEffectExpired(MobEffectEvent.Expired event) {BerserkEvents.onEffectExpired(event);}

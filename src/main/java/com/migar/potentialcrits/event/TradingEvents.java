@@ -13,9 +13,6 @@ import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
 import java.util.List;
 
-/**
- * Maneja todos los eventos relacionados con comerciantes y trades
- */
 public class TradingEvents {
 
     public static void addCustomTrades(VillagerTradesEvent event) {
