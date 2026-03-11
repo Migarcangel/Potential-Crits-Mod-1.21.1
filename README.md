@@ -305,7 +305,7 @@ Gains 1% extra chance for achieving different goals.
 #### Area Crits
 Disabled by default. You can only crit to a single target. If combined with sweeping crit, you can now do crits in area. Sweeping crits ignore the limit of +4 damage.
 
-## Crit Knowledge Book
+### Crit Knowledge Book
 
 For avoiding using the Internet. Information about crits will be displayed once you activate the crit for the first time. Crits will appear as the following example:
 
@@ -321,15 +321,15 @@ Incompatibilities: ???
 
 Crit Knowledge Book will be crafted with: 1 book and 1 crit gem.
 
-## Crit Gems
+### Crit Gems
 
 A new mineable gem found in the underground. Requires iron pickaxe to be obtained. Used in the Crit Table. Serves as a currency item to upgrade crits or manage them.
 
-## Crit Table
+### Crit Table
 
 A table where to put and extract crits from weapons using crit gems. It can also be used to upgrade crits, but only in enchanted books with one single crit. Costs will vary depending on the level and the difficulty to obtain of the crit. Crit table will be crafted with: 1 enchanted table, 4 crit gems and 4 diamonds.
 
-## Progression to crits
+### Progression to crits
 
 Activating crits do give permanent upgrades. The progress is tied to the player, not the weapon, so the player won’t be punished for changing crits or weapons.
 
