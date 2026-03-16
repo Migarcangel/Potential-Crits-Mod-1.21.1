@@ -23,9 +23,9 @@ public class ShieldCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "shield_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
 
-        float chance = level * 0.2f;
+        chance += level * 0.2f;
 
         if (player.level().random.nextFloat() < chance) {
             float damage = event.getAmount() + 3;

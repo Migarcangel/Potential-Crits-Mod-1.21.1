@@ -20,24 +20,24 @@
   "enchantment.potentialcrits.smash_crit" : "Smash Crit",
   "enchantment.potentialcrits.umbral_crit" : "Umbral Crit",
 
-  "effect.potentialcrits.heavy": "Heavy",
-  "effect.potentialcrits.shielded": "Shielded",
+  "effect.potentialcrits.heavy": "Pesado",
+  "effect.potentialcrits.shielded": "Blindaje",
   "effect.potentialcrits.berserker": "Berserker",
-  "effect.potentialcrits.accuracy": "Accuracy",
+  "effect.potentialcrits.accuracy": "Precisión",
 
   "creativetab.potential_crits.potential_crits": "Potential Crits",
 
-  "item.potentialcrits.crit_gem": "Crit Gem",
+  "item.potentialcrits.crit_gem": "Gema Crítica",
 
-  "item.minecraft.potion.effect.accuracy_potion": "Accuracy Potion",
-  "item.minecraft.splash_potion.effect.accuracy_potion": "Accuracy Splash Potion",
-  "item.minecraft.lingering_potion.effect.accuracy_potion": "Accuracy Lingering Potion",
+  "item.minecraft.potion.effect.accuracy_potion": "Poción de Precisión",
+  "item.minecraft.splash_potion.effect.accuracy_potion": "Poción Arrojadiza de Precisión",
+  "item.minecraft.lingering_potion.effect.accuracy_potion": "Poción Persistente de Precisión",
 
-  "item.minecraft.potion.effect.accuracy_potion_extended": "Accuracy Potion",
-  "item.minecraft.splash_potion.effect.accuracy_potion_extended": "Accuracy Splash Potion",
-  "item.minecraft.lingering_potion.effect.accuracy_potion_extended": "Accuracy Lingering Potion",
+  "item.minecraft.potion.effect.accuracy_potion_extended": "Poción de Precisión",
+  "item.minecraft.splash_potion.effect.accuracy_potion_extended": "Poción Arrojadiza de Precisión",
+  "item.minecraft.lingering_potion.effect.accuracy_potion_extended": "Poción Persistente de Precisión",
 
-  "item.minecraft.potion.effect.accuracy_potion_strong": "Accuracy Potion",
-  "item.minecraft.splash_potion.effect.accuracy_potion_strong": "Accuracy Splash Potion",
-  "item.minecraft.lingering_potion.effect.accuracy_potion_strong": "Accuracy Lingering Potion"
+  "item.minecraft.potion.effect.accuracy_potion_strong": "Poción de Precisión",
+  "item.minecraft.splash_potion.effect.accuracy_potion_strong": "Poción Arrojadiza de Precisión",
+  "item.minecraft.lingering_potion.effect.accuracy_potion_strong": "Poción Persistente de Precisión"
 }

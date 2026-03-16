@@ -19,7 +19,7 @@ public class ThunderCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "thunder_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
         LivingEntity target = event.getEntity();
 
         BlockPos pos = target.blockPosition().above();
@@ -31,7 +31,7 @@ public class ThunderCritEffect implements CritEffect {
 
         boolean thunder = player.level().isThundering();
 
-        float chance = level * 0.1f;
+        chance += level * 0.1f;
         if (thunder) {
             chance = chance * 2;
         }

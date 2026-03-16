@@ -15,9 +15,9 @@ public class SmashCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "smash_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
 
-        float chance = level * 0.1f;
+        chance += level * 0.1f;
         float fallDistance = player.fallDistance;
 
         chance += Math.min(fallDistance * 0.01f, 0.35f);

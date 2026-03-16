@@ -12,41 +12,8 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 
 import java.util.List;
-import java.util.Map;
 
 public class WanderingTradingEvents {
-
-    // List of all critical enchantment keys from the JSON
-    private static final List<ResourceKey<Enchantment>> ALL_CRIT_ENCHANTMENT_KEYS = List.of(
-            ModEnchantments.FIRE_CRIT,
-            ModEnchantments.THUNDER_CRIT,
-            ModEnchantments.DARK_CRIT,
-            ModEnchantments.LIGHT_CRIT,
-            ModEnchantments.GROUND_CRIT,
-            ModEnchantments.WATER_CRIT,
-            ModEnchantments.SUPER_CRIT,
-            ModEnchantments.TRUE_CRIT,
-            ModEnchantments.SHIELD_CRIT,
-            ModEnchantments.BERSERK_CRIT,
-            ModEnchantments.SMASH_CRIT,
-            ModEnchantments.UMBRAL_CRIT
-    );
-
-    // Maximum levels for each enchantment (using ResourceKey as key)
-    private static final Map<ResourceKey<Enchantment>, Integer> MAX_LEVELS = Map.ofEntries(
-            Map.entry(ModEnchantments.FIRE_CRIT, 3),
-            Map.entry(ModEnchantments.THUNDER_CRIT, 3),
-            Map.entry(ModEnchantments.DARK_CRIT, 3),
-            Map.entry(ModEnchantments.LIGHT_CRIT, 3),
-            Map.entry(ModEnchantments.GROUND_CRIT, 1),
-            Map.entry(ModEnchantments.WATER_CRIT, 2),
-            Map.entry(ModEnchantments.SUPER_CRIT, 2),
-            Map.entry(ModEnchantments.TRUE_CRIT, 2),
-            Map.entry(ModEnchantments.SHIELD_CRIT, 1),
-            Map.entry(ModEnchantments.BERSERK_CRIT, 1),
-            Map.entry(ModEnchantments.SMASH_CRIT, 2),
-            Map.entry(ModEnchantments.UMBRAL_CRIT, 2)
-    );
 
     /**
      * Adds custom trades to the Wandering Trader.
@@ -56,17 +23,18 @@ public class WanderingTradingEvents {
         List<VillagerTrades.ItemListing> rareTrades = event.getRareTrades();
 
         // Add one trade for each critical enchantment
-        for (ResourceKey<Enchantment> enchantmentKey : ALL_CRIT_ENCHANTMENT_KEYS) {
+        for (ResourceKey<Enchantment> enchantmentKey : ModEnchantments.getAllCrits()) {
             rareTrades.add((trader, random) -> {
-                // Get the enchantment holder from the registry using the key
                 var enchantmentRegistry = trader.level().registryAccess()
                         .lookup(Registries.ENCHANTMENT).orElseThrow();
-
-                var enchantmentHolder = enchantmentRegistry.get(enchantmentKey).orElse(null);
-                if (enchantmentHolder == null) return null;
+                // Get the enchantment holder from the registry using the key
+                var enchantmentHolder = enchantmentRegistry.getOrThrow(enchantmentKey);
 
                 // Get the max level for this enchantment
-                int maxLevel = MAX_LEVELS.getOrDefault(enchantmentKey, 1);
+                int maxLevel = enchantmentHolder.value().getMaxLevel();
+                if(enchantmentKey == ModEnchantments.FIRE_CRIT || enchantmentKey == ModEnchantments.THUNDER_CRIT) {
+                    maxLevel++;
+                }
 
                 // Generate random level between 1 and maxLevel
                 int level = 1 + random.nextInt(maxLevel);

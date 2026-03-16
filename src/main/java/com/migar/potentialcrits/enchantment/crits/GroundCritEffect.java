@@ -20,10 +20,10 @@ public class GroundCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "ground_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
         LivingEntity target = event.getEntity();
 
-        float chance = level * 0.25f;
+        chance += level * 0.25f;
 
         if (target.onGround() && player.onGround() && player.level().random.nextFloat() < chance) {
             float damage = event.getAmount();

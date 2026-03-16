@@ -30,6 +30,8 @@ public class ModEffects {
                             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "berserker"), 0.25f,
                             AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
+    public static final Holder<MobEffect> ACCURACY_EFFECT = MOB_EFFECTS.register("accuracy",
+            () -> new AccuracyEffect(MobEffectCategory.BENEFICIAL, 0x36ebab));
 
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);

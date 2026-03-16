@@ -20,10 +20,10 @@ public class WaterCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "water_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
         LivingEntity target = event.getEntity();
 
-        float chance = level * 0.05f;
+        chance += level * 0.05f;
 
         if (player.isInWaterRainOrBubble() && player.level().random.nextFloat() < chance) {
             float damage = event.getAmount();

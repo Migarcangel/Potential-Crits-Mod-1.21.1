@@ -18,10 +18,10 @@ public class UmbralCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "umbral_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
         LivingEntity target = event.getEntity();
 
-        float chance = level * 0.1f;
+        chance += level * 0.1f;
         BlockPos pos = target.blockPosition();
 
         int light = target.level().getMaxLocalRawBrightness(pos);

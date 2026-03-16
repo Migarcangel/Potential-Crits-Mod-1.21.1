@@ -14,43 +14,39 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentTarget;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class ModEnchantments {
     // ResourceKeys
-    public static final ResourceKey<Enchantment> FIRE_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "fire_crit"));
+    private static final List<ResourceKey<Enchantment>> CRITS = new ArrayList<>();
+    public static List<ResourceKey<Enchantment>> getAllCrits() {
+        return Collections.unmodifiableList(CRITS);
+    }
 
-    public static final ResourceKey<Enchantment> THUNDER_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "thunder_crit"));
+    private static ResourceKey<Enchantment> createCrit(String name) {
+        ResourceKey<Enchantment> key = ResourceKey.create(
+                Registries.ENCHANTMENT,
+                ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, name)
+        );
 
-    public static final ResourceKey<Enchantment> DARK_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "dark_crit"));
+        CRITS.add(key);
+        return key;
+    }
 
-    public static final ResourceKey<Enchantment> LIGHT_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "light_crit"));
-
-    public static final ResourceKey<Enchantment> GROUND_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "ground_crit"));
-
-    public static final ResourceKey<Enchantment> WATER_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "water_crit"));
-
-    public static final ResourceKey<Enchantment> SUPER_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "super_crit"));
-
-    public static final ResourceKey<Enchantment> TRUE_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "true_crit"));
-
-    public static final ResourceKey<Enchantment> SHIELD_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "shield_crit"));
-
-    public static final ResourceKey<Enchantment> BERSERK_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "berserk_crit"));
-
-    public static final ResourceKey<Enchantment> SMASH_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "smash_crit"));
-
-    public static final ResourceKey<Enchantment> UMBRAL_CRIT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "umbral_crit"));
+    public static final ResourceKey<Enchantment> FIRE_CRIT = createCrit("fire_crit");
+    public static final ResourceKey<Enchantment> THUNDER_CRIT = createCrit("thunder_crit");
+    public static final ResourceKey<Enchantment> DARK_CRIT = createCrit("dark_crit");
+    public static final ResourceKey<Enchantment> LIGHT_CRIT = createCrit("light_crit");
+    public static final ResourceKey<Enchantment> GROUND_CRIT = createCrit("ground_crit");
+    public static final ResourceKey<Enchantment> WATER_CRIT = createCrit("water_crit");
+    public static final ResourceKey<Enchantment> SUPER_CRIT = createCrit("super_crit");
+    public static final ResourceKey<Enchantment> TRUE_CRIT = createCrit("true_crit");
+    public static final ResourceKey<Enchantment> SHIELD_CRIT = createCrit("shield_crit");
+    public static final ResourceKey<Enchantment> BERSERK_CRIT = createCrit("berserk_crit");
+    public static final ResourceKey<Enchantment> SMASH_CRIT = createCrit("smash_crit");
+    public static final ResourceKey<Enchantment> UMBRAL_CRIT = createCrit("umbral_crit");
 
     // Item Tags
     public static final TagKey<Item> SWORD_SHIELD =

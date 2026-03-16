@@ -15,8 +15,8 @@ public class FireCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "fire_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
-        float chance = level * 0.05f;
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
+        chance += level * 0.05f;
         LivingEntity target = event.getEntity();
 
         if (player.level().random.nextFloat() < chance && target.isOnFire()) {

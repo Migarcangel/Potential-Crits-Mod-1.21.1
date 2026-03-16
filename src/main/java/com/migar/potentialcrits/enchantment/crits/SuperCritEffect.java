@@ -16,7 +16,7 @@ public class SuperCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "super_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
         // This crit is implemented in ModEvents in the event onCriticalHit.
         // Returns only to increment CritsApplied in ModEvents.
         return ModEvents.WAS_SUPER_CRIT.get();

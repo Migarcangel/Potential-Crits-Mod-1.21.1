@@ -28,14 +28,17 @@ public class ShieldEvents {
     private static final ResourceLocation SHIELD_ENCHANTMENT =
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "shield_crit");
 
-    private static final Set<ResourceKey<DamageType>> BLOCKABLE_DAMAGE_TYPES = Set.of(
-            DamageTypes.MOB_ATTACK, DamageTypes.PLAYER_ATTACK, DamageTypes.ARROW,
-            DamageTypes.TRIDENT, DamageTypes.MOB_PROJECTILE, DamageTypes.EXPLOSION,
-            DamageTypes.PLAYER_EXPLOSION, DamageTypes.FIREBALL, DamageTypes.UNATTRIBUTED_FIREBALL,
-            DamageTypes.THROWN, DamageTypes.FALLING_ANVIL, DamageTypes.STING,
-            DamageTypes.WITHER_SKULL, DamageTypes.SONIC_BOOM, DamageTypes.FIREWORKS,
-            DamageTypes.LIGHTNING_BOLT, DamageTypes.SPIT, DamageTypes.FALLING_BLOCK,
-            DamageTypes.FALLING_STALACTITE, DamageTypes.STALAGMITE, DamageTypes.MOB_ATTACK_NO_AGGRO
+    private static final Set<ResourceKey<DamageType>> UNBLOCKABLE_DAMAGE_TYPES = Set.of(
+            DamageTypes.STARVE, DamageTypes.DROWN,
+            DamageTypes.FALL,DamageTypes.IN_WALL,
+            DamageTypes.FELL_OUT_OF_WORLD, DamageTypes.GENERIC_KILL,
+            DamageTypes.MAGIC, DamageTypes.INDIRECT_MAGIC,
+            DamageTypes.WITHER, DamageTypes.DRAGON_BREATH,
+            DamageTypes.CRAMMING, DamageTypes.IN_FIRE,
+            DamageTypes.ON_FIRE, DamageTypes.LAVA,
+            DamageTypes.HOT_FLOOR, DamageTypes.FREEZE,
+            DamageTypes.CACTUS, DamageTypes.SWEET_BERRY_BUSH,
+            DamageTypes.THORNS, DamageTypes.DRY_OUT
     );
 
     public static void onBlockedWithShield(LivingShieldBlockEvent event) {
@@ -78,7 +81,7 @@ public class ShieldEvents {
         if (!target.isBlocking() && target.hasEffect(ModEffects.SHIELD_EFFECT)) {
             var damageType = source.typeHolder().unwrapKey().orElse(null);
 
-            boolean shouldBlock = damageType != null && BLOCKABLE_DAMAGE_TYPES.contains(damageType);
+            boolean shouldBlock = damageType != null && !UNBLOCKABLE_DAMAGE_TYPES.contains(damageType);
 
             if (shouldBlock) {
                 event.setCanceled(true);

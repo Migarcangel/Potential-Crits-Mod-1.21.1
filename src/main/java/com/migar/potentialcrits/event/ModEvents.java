@@ -14,12 +14,14 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 
 import static com.migar.potentialcrits.event.EventUtils.getEnchantmentLevel;
+import static com.migar.potentialcrits.event.EventUtils.getInitialChance;
 
 @EventBusSubscriber(modid = PotentialCrits.MODID)
 public class ModEvents {
@@ -48,6 +50,8 @@ public class ModEvents {
         }
 
         int critsApplied = 0;
+        float chance = 0;
+        chance = getInitialChance(player, chance);
 
         // Iterate through ALL registered critical effects
         for (CritEffect critEffect : CritRegistry.getAll()) {
@@ -55,7 +59,7 @@ public class ModEvents {
             int level = getEnchantmentLevel(weapon, player, critEffect.getId());
 
             if (level > 0) {
-                if(critEffect.applyEffect(player, event, level)) {
+                if(critEffect.applyEffect(player, event, level, chance)) {
                     critsApplied += 1;
                     critEffect.playSpecialEffects(player,event.getEntity());
                 }
@@ -75,23 +79,28 @@ public class ModEvents {
         Player player = event.getEntity();
         WAS_CRITICAL.set(event.isCriticalHit());
 
-        int level = getEnchantmentLevel(player.getMainHandItem(), player, EventUtils.GROUND_CRIT);
+        if(event.isCriticalHit()) {
+            int level = getEnchantmentLevel(player.getMainHandItem(), player, EventUtils.GROUND_CRIT);
 
-        if (level > 0) {
-            event.setCriticalHit(false);
-        }
-
-        level = getEnchantmentLevel(player.getMainHandItem(), player, EventUtils.SUPER_CRIT);
-        float chance = 0.05f * level;
-
-        if (level > 0 && player.level().random.nextFloat() < chance) {
-            float multiplier = 0.1f * level;
-            event.setDamageMultiplier(1.5f + multiplier);
-
-            if (event.getTarget() instanceof LivingEntity target) {
-                target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,60,0));
+            if (level > 0) {
+                event.setCriticalHit(false);
             }
-            WAS_SUPER_CRIT.set(true);
+
+            level = getEnchantmentLevel(player.getMainHandItem(), player, EventUtils.SUPER_CRIT);
+
+            float chance = 0;
+            chance = getInitialChance(player, chance);
+            chance += 0.05f * level;
+
+            if (level > 0 && player.level().random.nextFloat() < chance) {
+                float multiplier = 0.1f * level;
+                event.setDamageMultiplier(1.5f + multiplier);
+
+                if (event.getTarget() instanceof LivingEntity target) {
+                    target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,60,0));
+                }
+                WAS_SUPER_CRIT.set(true);
+            }
         }
     }
 
@@ -114,8 +123,10 @@ public class ModEvents {
     @SubscribeEvent
     public static void onEffectExpired(MobEffectEvent.Expired event) {BerserkEvents.onEffectExpired(event);}
 
-    // Curación al matar enemigos
     @SubscribeEvent
     public static void onKill(LivingDeathEvent event) {BerserkEvents.onKill(event);}
+
+    @SubscribeEvent
+    public static void onBrewingRecipeRegister(RegisterBrewingRecipesEvent event) {BrewingRecipeEvents.onBrewingRecipeRegister(event);}
 }
 

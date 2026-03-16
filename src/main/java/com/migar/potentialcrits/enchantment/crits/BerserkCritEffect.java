@@ -18,9 +18,9 @@ public class BerserkCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "berserk_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
 
-        float chance = level * 0.15f;
+        chance += level * 0.15f;
 
         if (player.getHealth()/player.getMaxHealth() <= 0.55 && player.level().random.nextFloat() < chance && !player.hasEffect(MobEffects.WEAKNESS)) {
             float damage = event.getAmount() + 2;
