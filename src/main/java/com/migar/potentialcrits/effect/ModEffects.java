@@ -30,6 +30,15 @@ public class ModEffects {
                             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "berserker"), 0.25f,
                             AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
+    public static final Holder<MobEffect> EXPOSED_EFFECT = MOB_EFFECTS.register("exposed",
+            () -> new ExposedEffect(MobEffectCategory.HARMFUL, 0x36ebab)
+                    .addAttributeModifier(Attributes.ARMOR,
+                            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "exposed_armor"), -0.25f,
+                            AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+                    .addAttributeModifier(Attributes.ARMOR_TOUGHNESS,
+                            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "exposed_toughness"), -0.25f,
+                            AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+
     public static final Holder<MobEffect> ACCURACY_EFFECT = MOB_EFFECTS.register("accuracy",
             () -> new AccuracyEffect(MobEffectCategory.BENEFICIAL, 0x36ebab));
 

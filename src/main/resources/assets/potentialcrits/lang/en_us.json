@@ -19,6 +19,8 @@
   "enchantment.potentialcrits.berserk_crit" : "Berserk Crit",
   "enchantment.potentialcrits.smash_crit" : "Smash Crit",
   "enchantment.potentialcrits.umbral_crit" : "Umbral Crit",
+  "enchantment.potentialcrits.vampire_crit" : "Vampire Crit",
+  "enchantment.potentialcrits.sunder_crit" : "Sunder Crit",
 
   "effect.potentialcrits.heavy": "Heavy",
   "effect.potentialcrits.shielded": "Shielded",

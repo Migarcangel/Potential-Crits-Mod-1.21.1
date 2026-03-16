@@ -47,6 +47,8 @@ public class ModEnchantments {
     public static final ResourceKey<Enchantment> BERSERK_CRIT = createCrit("berserk_crit");
     public static final ResourceKey<Enchantment> SMASH_CRIT = createCrit("smash_crit");
     public static final ResourceKey<Enchantment> UMBRAL_CRIT = createCrit("umbral_crit");
+    public static final ResourceKey<Enchantment> VAMPIRE_CRIT = createCrit("vampire_crit");
+    public static final ResourceKey<Enchantment> SUNDER_CRIT = createCrit("sunder_crit");
 
     // Item Tags
     public static final TagKey<Item> SWORD_SHIELD =
@@ -136,6 +138,7 @@ public class ModEnchantments {
                         EquipmentSlotGroup.MAINHAND))
                 .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.DARK_LIGHT_EXCLUSIVE))
                 .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.LIGHT_UMBRAL_EXCLUSIVE))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.VAMPIRE_LIGHT_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new LightCritEnchantmentEffect()));
 
@@ -223,6 +226,7 @@ public class ModEnchantments {
                                 EquipmentSlotGroup.MAINHAND
                         ))
                 .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.SHIELD_BERSERK_EXCLUSIVE))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.VAMPIRE_BERSERK_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new BerserkCritEnchantmentEffect()));
 
@@ -259,6 +263,36 @@ public class ModEnchantments {
                 .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.LIGHT_UMBRAL_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new UmbralCritEnchantmentEffect()));
+
+        // VAMPIRE CRIT
+        register(context, VAMPIRE_CRIT, Enchantment.enchantment(Enchantment.definition(
+                        items.getOrThrow(SWORD_AXE_TRIDENT),
+                        items.getOrThrow(SWORD_AXE_TRIDENT),
+                        2,
+                        4,
+                        Enchantment.dynamicCost(15, 10),
+                        Enchantment.dynamicCost(30, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.VAMPIRE_LIGHT_EXCLUSIVE))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.VAMPIRE_BERSERK_EXCLUSIVE))
+                .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
+                        EnchantmentTarget.VICTIM, new VampireCritEnchantmentEffect()));
+
+        // SUNDER CRIT
+        register(context, SUNDER_CRIT, Enchantment.enchantment(Enchantment.definition(
+                        items.getOrThrow(AXE_MACE),
+                        items.getOrThrow(AXE_MACE),
+                        2,
+                        4,
+                        Enchantment.dynamicCost(15, 10),
+                        Enchantment.dynamicCost(30, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.SUNDER_TRUE_EXCLUSIVE))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.SUNDER_SHIELD_EXCLUSIVE))
+                .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
+                        EnchantmentTarget.VICTIM, new SunderCritEnchantmentEffect()));
     }
 
     private static void register(BootstrapContext<Enchantment> registry, ResourceKey<Enchantment> key,

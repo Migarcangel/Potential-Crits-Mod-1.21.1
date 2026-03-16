@@ -2,6 +2,14 @@
   "replace": false,
   "values": [
     "#minecraft:axes",
-    "#minecraft:mace"
+    "minecraft:mace",
+    {
+      "id": "#forge:tools/maces",
+      "required": false
+    },
+    {
+      "id": "#c:tools/maces",
+      "required": false
+    }
   ]
 }

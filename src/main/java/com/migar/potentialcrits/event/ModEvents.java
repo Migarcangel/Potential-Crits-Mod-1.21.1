@@ -1,6 +1,7 @@
 package com.migar.potentialcrits.event;
 
 import com.migar.potentialcrits.PotentialCrits;
+import com.migar.potentialcrits.attachments.PlayerData;
 import com.migar.potentialcrits.enchantment.crits.CritEffect;
 import com.migar.potentialcrits.enchantment.crits.CritRegistry;
 import com.migar.potentialcrits.enchantment.crits.CritUtils;
@@ -25,7 +26,8 @@ import static com.migar.potentialcrits.event.EventUtils.getInitialChance;
 
 @EventBusSubscriber(modid = PotentialCrits.MODID)
 public class ModEvents {
-    public static final ThreadLocal<Boolean> WAS_CRITICAL =  ThreadLocal.withInitial(() -> false);
+    public static final ThreadLocal<Boolean> WAS_CRIT =  ThreadLocal.withInitial(() -> false);
+    public static final ThreadLocal<Boolean> WAS_VANILLA_CRIT =  ThreadLocal.withInitial(() -> false);
     public static final ThreadLocal<Boolean> WAS_SUPER_CRIT =  ThreadLocal.withInitial(() -> false);
 
     @SubscribeEvent
@@ -50,8 +52,7 @@ public class ModEvents {
         }
 
         int critsApplied = 0;
-        float chance = 0;
-        chance = getInitialChance(player, chance);
+        float chance = getInitialChance(player);
 
         // Iterate through ALL registered critical effects
         for (CritEffect critEffect : CritRegistry.getAll()) {
@@ -70,14 +71,17 @@ public class ModEvents {
             CritUtils.playGenericCritParticles(event.getEntity());
             CritUtils.playGenericCritSound(event.getEntity());
         }
-        WAS_CRITICAL.set(false);
+        if(critsApplied >= 3) {
+            PlayerData.setPermanentUpgrade3(player);
+        }
+        WAS_VANILLA_CRIT.set(false);
         WAS_SUPER_CRIT.set(false);
     }
 
     @SubscribeEvent
     public static void onCriticalHit(CriticalHitEvent event) {
         Player player = event.getEntity();
-        WAS_CRITICAL.set(event.isCriticalHit());
+        WAS_VANILLA_CRIT.set(event.isCriticalHit());
 
         if(event.isCriticalHit()) {
             int level = getEnchantmentLevel(player.getMainHandItem(), player, EventUtils.GROUND_CRIT);
@@ -88,8 +92,7 @@ public class ModEvents {
 
             level = getEnchantmentLevel(player.getMainHandItem(), player, EventUtils.SUPER_CRIT);
 
-            float chance = 0;
-            chance = getInitialChance(player, chance);
+            float chance = getInitialChance(player);
             chance += 0.05f * level;
 
             if (level > 0 && player.level().random.nextFloat() < chance) {
@@ -124,7 +127,10 @@ public class ModEvents {
     public static void onEffectExpired(MobEffectEvent.Expired event) {BerserkEvents.onEffectExpired(event);}
 
     @SubscribeEvent
-    public static void onKill(LivingDeathEvent event) {BerserkEvents.onKill(event);}
+    public static void onKill(LivingDeathEvent event) {
+        UpgradesEvents.onKill(event);
+        BerserkEvents.onKill(event);
+    }
 
     @SubscribeEvent
     public static void onBrewingRecipeRegister(RegisterBrewingRecipesEvent event) {BrewingRecipeEvents.onBrewingRecipeRegister(event);}

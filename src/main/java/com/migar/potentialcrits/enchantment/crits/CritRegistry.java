@@ -23,6 +23,8 @@ public class CritRegistry {
         register(new LightCritEffect());
         register(new GroundCritEffect());
         register(new TrueCritEffect());
+        register(new VampireCritEffect());
+        register(new SunderCritEffect());
         // Add more here.
     }
 

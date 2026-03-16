@@ -50,6 +50,12 @@ public class ModEnchantmentEffects {
     public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> UMBRAL_CRIT =
             ENTITY_ENCHANTMENT_EFFECTS.register("umbral_crit", () -> UmbralCritEnchantmentEffect.CODEC);
 
+    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> VAMPIRE_CRIT =
+            ENTITY_ENCHANTMENT_EFFECTS.register("vampire_crit", () -> VampireCritEnchantmentEffect.CODEC);
+
+    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> SUNDER_CRIT =
+            ENTITY_ENCHANTMENT_EFFECTS.register("sunder_crit", () -> SunderCritEnchantmentEffect.CODEC);
+
     public static void register (IEventBus eventBus) {
         ENTITY_ENCHANTMENT_EFFECTS.register(eventBus);
     }

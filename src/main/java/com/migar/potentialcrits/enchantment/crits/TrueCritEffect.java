@@ -21,7 +21,7 @@ public class TrueCritEffect implements CritEffect {
 
         chance += level * 0.05f;
 
-        if (ModEvents.WAS_CRITICAL.get() && player.level().random.nextFloat() < chance) {
+        if (ModEvents.WAS_VANILLA_CRIT.get() && player.level().random.nextFloat() < chance) {
             float newHealth = getNewHealth(event, level, target);
 
             target.setHealth(newHealth);

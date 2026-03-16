@@ -17,6 +17,13 @@ public class ModEnchantmentTags {
     public static final TagKey<Enchantment> LIGHT_UMBRAL_EXCLUSIVE = create("light_umbral_exclusive");
 
     public static final TagKey<Enchantment> GROUND_SUPER_TRUE_SMASH_EXCLUSIVE = create("ground_super_true_smash_exclusive");
+
+    public static final TagKey<Enchantment> VAMPIRE_LIGHT_EXCLUSIVE = create("vampire_light_exclusive");
+    public static final TagKey<Enchantment> VAMPIRE_BERSERK_EXCLUSIVE = create("vampire_berserk_exclusive");
+
+    public static final TagKey<Enchantment> SUNDER_TRUE_EXCLUSIVE = create("sunder_true_exclusive");
+    public static final TagKey<Enchantment> SUNDER_SHIELD_EXCLUSIVE = create("sunder_shield_exclusive");
+
     // These dont work. But i'll leave them in case mod gets changed.
     /*public static final TagKey<Enchantment> GROUND_SUPER_EXCLUSIVE = create("ground_super_exclusive");
     public static final TagKey<Enchantment> GROUND_TRUE_EXCLUSIVE = create("ground_true_exclusive");

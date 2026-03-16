@@ -61,9 +61,9 @@ public class BerserkEvents {
                 LivingEntity target = event.getEntity();
 
                 if (target.level() instanceof ServerLevel serverLevel) {
-                    BlockState shieldBlockState = Blocks.REDSTONE_BLOCK.defaultBlockState();
+                    BlockState bloodBlockState = Blocks.REDSTONE_BLOCK.defaultBlockState();
                     serverLevel.sendParticles(
-                            new BlockParticleOption(ParticleTypes.BLOCK, shieldBlockState),
+                            new BlockParticleOption(ParticleTypes.BLOCK, bloodBlockState),
                             target.getX(),
                             target.getY() + 0.9,
                             target.getZ(),
