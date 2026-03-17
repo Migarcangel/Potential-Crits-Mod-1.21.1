@@ -1,6 +1,7 @@
 package com.migar.potentialcrits.event;
 
 import com.migar.potentialcrits.PotentialCrits;
+import com.migar.potentialcrits.attachments.PlayerData;
 import com.migar.potentialcrits.effect.ModEffects;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -9,9 +10,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-/**
- * Utilidades compartidas para el manejo de críticos
- */
 public class EventUtils {
 
     public static final ResourceLocation GROUND_CRIT =
@@ -28,10 +26,12 @@ public class EventUtils {
         return stack.getEnchantmentLevel(holder);
     }
 
-    public static float getInitialChance(Player player, float chance) {
+    public static float getInitialChance(Player player) {
+
+        float chance = PlayerData.getPermanentChance(player) * 0.01f;
         MobEffectInstance effectInstance = player.getEffect(ModEffects.ACCURACY_EFFECT);
         if (effectInstance != null) {
-            chance += (effectInstance.getAmplifier() + 1) * 0.25f;
+            chance += (effectInstance.getAmplifier() + 1) * 0.05f;
         }
         return chance;
     }

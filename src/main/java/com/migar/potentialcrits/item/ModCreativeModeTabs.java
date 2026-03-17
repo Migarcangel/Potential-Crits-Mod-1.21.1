@@ -1,6 +1,7 @@
 package com.migar.potentialcrits.item;
 
 import com.migar.potentialcrits.PotentialCrits;
+import com.migar.potentialcrits.block.ModBlocks;
 import com.migar.potentialcrits.enchantment.ModEnchantments;
 import com.migar.potentialcrits.potion.ModPotions;
 import net.minecraft.core.Holder;
@@ -35,6 +36,9 @@ public class ModCreativeModeTabs {
                     .displayItems((itemDisplayParameters, output) -> {
                         // Crit Gem
                         output.accept(ModItems.CRIT_GEM);
+
+                        // Crit Ores
+                        output.accept(ModBlocks.CRIT_ORE);
 
                         // All the potions
                         addPotionVariants(output, ModPotions.ACCURACY_POTION);

@@ -1,5 +1,7 @@
 package com.migar.potentialcrits;
 
+import com.migar.potentialcrits.attachments.ModAttachments;
+import com.migar.potentialcrits.block.ModBlocks;
 import com.migar.potentialcrits.effect.ModEffects;
 import com.migar.potentialcrits.enchantment.ModEnchantmentEffects;
 import com.migar.potentialcrits.event.ModEvents;
@@ -48,6 +50,7 @@ public class PotentialCrits {
         ModCreativeModeTabs.register(modEventBus);
         // Register Items
         ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
 
         // Register Effects and Potions
         ModEffects.register(modEventBus);
@@ -58,6 +61,9 @@ public class PotentialCrits {
 
         // Register Loot Modifiers
         ModLootModifiers.register(modEventBus);
+
+        // Register Attachments (PlayerData)
+        ModAttachments.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.

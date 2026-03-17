@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "potentialcrits:block/crit_ore"
+    }
+  }
+}
