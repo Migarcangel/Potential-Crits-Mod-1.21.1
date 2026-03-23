@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "potentialcrits:crit_cookie",
+      "potentialcrits:crit_heart"
+    ]
+  },
+  "criteria": {
+    "has_crit_gem": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "potentialcrits:crit_gem"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_crit_gem"
+    ]
+  ]
+}

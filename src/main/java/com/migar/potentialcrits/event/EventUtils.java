@@ -18,6 +18,9 @@ public class EventUtils {
     public static final ResourceLocation SUPER_CRIT =
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "super_crit");
 
+    public static final ResourceLocation HARVEST_CRIT =
+            ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "harvest_crit");
+
     public static int getEnchantmentLevel(ItemStack stack, Player player,  ResourceLocation enchantmentId) {
         var holderSet = player.level().registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
         var holder = holderSet.get(ResourceKey.create(Registries.ENCHANTMENT, enchantmentId)).orElse(null); // Get the reference to the enchantment

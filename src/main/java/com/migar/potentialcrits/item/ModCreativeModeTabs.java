@@ -39,6 +39,12 @@ public class ModCreativeModeTabs {
 
                         // Crit Ores
                         output.accept(ModBlocks.CRIT_ORE);
+                        output.accept(ModBlocks.DEEPSLATE_CRIT_ORE);
+
+                        // Consumables
+                        output.accept(ModItems.CRIT_COOKIE);
+                        output.accept(ModItems.CRIT_HEART);
+                        output.accept(ModItems.CRIT_PIE);
 
                         // All the potions
                         addPotionVariants(output, ModPotions.ACCURACY_POTION);

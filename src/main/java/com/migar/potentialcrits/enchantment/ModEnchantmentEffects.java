@@ -56,6 +56,12 @@ public class ModEnchantmentEffects {
     public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> SUNDER_CRIT =
             ENTITY_ENCHANTMENT_EFFECTS.register("sunder_crit", () -> SunderCritEnchantmentEffect.CODEC);
 
+    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> ICE_CRIT =
+            ENTITY_ENCHANTMENT_EFFECTS.register("ice_crit", () -> IceCritEnchantmentEffect.CODEC);
+
+    public static final Supplier<MapCodec<? extends EnchantmentEntityEffect>> HARVEST_CRIT =
+            ENTITY_ENCHANTMENT_EFFECTS.register("harvest_crit", () -> HarvestCritEnchantmentEffect.CODEC);
+
     public static void register (IEventBus eventBus) {
         ENTITY_ENCHANTMENT_EFFECTS.register(eventBus);
     }

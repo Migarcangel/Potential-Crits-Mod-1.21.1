@@ -2,9 +2,11 @@ package com.migar.potentialcrits.block;
 
 import com.migar.potentialcrits.PotentialCrits;
 import com.migar.potentialcrits.item.ModItems;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
@@ -19,11 +21,19 @@ public class ModBlocks {
             DeferredRegister.createBlocks(PotentialCrits.MODID);
 
     public static final DeferredBlock<Block> CRIT_ORE = registerBlock("crit_ore",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new DropExperienceBlock(UniformInt.of(4, 8), BlockBehaviour.Properties.of()
                     .mapColor(MapColor.STONE)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
                     .strength(3.0F, 3.0F)
+            ));
+
+    public static final DeferredBlock<Block> DEEPSLATE_CRIT_ORE = registerBlock("deepslate_crit_ore",
+            () -> new DropExperienceBlock(UniformInt.of(4, 8), BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.DEEPSLATE)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(4.5F, 3.0F)
             ));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {

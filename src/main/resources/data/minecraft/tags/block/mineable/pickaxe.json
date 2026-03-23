@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "potentialcrits:crit_ore",
+    "potentialcrits:deepslate_crit_ore"
+  ]
+}

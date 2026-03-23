@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "potentialcrits:crit_cookie"
+    },
+    "H": {
+      "item": "potentialcrits:crit_heart"
+    },
+    "E": {
+      "item": "minecraft:egg"
+    },
+    "M": {
+      "item": "minecraft:milk_bucket"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CHC",
+    "MEM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "potentialcrits:crit_pie"
+  }
+}

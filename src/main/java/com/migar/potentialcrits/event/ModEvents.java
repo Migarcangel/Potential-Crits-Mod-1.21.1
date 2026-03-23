@@ -1,6 +1,7 @@
 package com.migar.potentialcrits.event;
 
 import com.migar.potentialcrits.PotentialCrits;
+import com.migar.potentialcrits.attachments.PermanentUpgrade;
 import com.migar.potentialcrits.attachments.PlayerData;
 import com.migar.potentialcrits.enchantment.crits.CritEffect;
 import com.migar.potentialcrits.enchantment.crits.CritRegistry;
@@ -12,6 +13,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownTrident;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -29,15 +31,15 @@ public class ModEvents {
     public static final ThreadLocal<Boolean> WAS_CRIT =  ThreadLocal.withInitial(() -> false);
     public static final ThreadLocal<Boolean> WAS_VANILLA_CRIT =  ThreadLocal.withInitial(() -> false);
     public static final ThreadLocal<Boolean> WAS_SUPER_CRIT =  ThreadLocal.withInitial(() -> false);
+    public static final ThreadLocal<Boolean> WAS_FROZEN =  ThreadLocal.withInitial(() -> false);
+
+    public static final ThreadLocal<Integer> HARVEST_CRIT_LEVEL =  ThreadLocal.withInitial(() -> 0);
 
     @SubscribeEvent
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
         ShieldEvents.onLivingIncomingDamage(event);
 
         if (!(event.getSource().getEntity() instanceof Player player)) return;
-
-        // Crits will only be applied if damage is superior to 4. This is to avoid click spam.
-        if(event.getAmount() < 4) return ;
 
         DamageSource damageSource = event.getSource();
         ItemStack weapon = player.getMainHandItem();
@@ -51,6 +53,17 @@ public class ModEvents {
             weapon = trident.getPickupItemStackOrigin();
         }
 
+        // Harvest Crit
+        if(weapon.getItem() instanceof HoeItem) {
+            int harvestLevel = getEnchantmentLevel(weapon,player, EventUtils.HARVEST_CRIT);
+            if(harvestLevel > 0) {
+                event.setAmount(Math.max(event.getAmount(), 4));
+            }
+        }
+
+        // Crits will only be applied if damage is superior to 4. This is to avoid click spam.
+        if(event.getAmount() < 4) return ;
+
         int critsApplied = 0;
         float chance = getInitialChance(player);
 
@@ -63,6 +76,10 @@ public class ModEvents {
                 if(critEffect.applyEffect(player, event, level, chance)) {
                     critsApplied += 1;
                     critEffect.playSpecialEffects(player,event.getEntity());
+
+                    PlayerData.incTotalCrits(player);
+                    PlayerData.incrementCritCount(player,critEffect.getId());
+                    WAS_CRIT.set(true);
                 }
             }
         }
@@ -72,7 +89,7 @@ public class ModEvents {
             CritUtils.playGenericCritSound(event.getEntity());
         }
         if(critsApplied >= 3) {
-            PlayerData.setPermanentUpgrade3(player);
+            PlayerData.setPermanentUpgrade(player, PermanentUpgrade.UPGRADE_2);
         }
         WAS_VANILLA_CRIT.set(false);
         WAS_SUPER_CRIT.set(false);
@@ -128,9 +145,13 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onKill(LivingDeathEvent event) {
-        UpgradesEvents.onKill(event);
         BerserkEvents.onKill(event);
+        HarvestEvents.onKill(event);
+        UpgradesEvents.onKill(event);
     }
+
+    @SubscribeEvent
+    private static void onXpDrop(LivingExperienceDropEvent event) {HarvestEvents.onXpDrop(event);}
 
     @SubscribeEvent
     public static void onBrewingRecipeRegister(RegisterBrewingRecipesEvent event) {BrewingRecipeEvents.onBrewingRecipeRegister(event);}

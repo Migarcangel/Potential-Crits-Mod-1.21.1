@@ -21,15 +21,24 @@
   "enchantment.potentialcrits.umbral_crit" : "Umbral Crit",
   "enchantment.potentialcrits.vampire_crit" : "Vampire Crit",
   "enchantment.potentialcrits.sunder_crit" : "Sunder Crit",
+  "enchantment.potentialcrits.ice_crit" : "Ice Crit",
+  "enchantment.potentialcrits.harvest_crit" : "Harvest Crit",
 
   "effect.potentialcrits.heavy": "Pesado",
   "effect.potentialcrits.shielded": "Blindaje",
   "effect.potentialcrits.berserker": "Berserker",
   "effect.potentialcrits.accuracy": "Precisión",
+  "effect.potentialcrits.exposed": "Expuesto",
 
   "creativetab.potential_crits.potential_crits": "Potential Crits",
 
   "item.potentialcrits.crit_gem": "Gema Crítica",
+  "block.potentialcrits.crit_ore": "Mena Crítica",
+  "block.potentialcrits.deepslate_crit_ore": "Mena Crítica",
+
+  "item.potentialcrits.crit_cookie": "Galleta de la Fortuna",
+  "item.potentialcrits.crit_heart": "Corazón de los Críticos",
+  "item.potentialcrits.crit_pie": "Tarta del Jackpot",
 
   "item.minecraft.potion.effect.accuracy_potion": "Poción de Precisión",
   "item.minecraft.splash_potion.effect.accuracy_potion": "Poción Arrojadiza de Precisión",

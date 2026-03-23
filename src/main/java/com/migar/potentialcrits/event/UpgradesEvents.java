@@ -1,5 +1,6 @@
 package com.migar.potentialcrits.event;
 
+import com.migar.potentialcrits.attachments.PermanentUpgrade;
 import com.migar.potentialcrits.attachments.PlayerData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -13,10 +14,10 @@ public class UpgradesEvents {
     public static void onKill(LivingDeathEvent event) {
         if(event.getSource().getEntity() instanceof Player player) {
             if(event.getEntity().getType() == EntityType.ENDER_DRAGON) {
-                PlayerData.setPermanentUpgrade1(player);
+                PlayerData.setPermanentUpgrade(player, PermanentUpgrade.UPGRADE_1);
             } else if(event.getEntity().getType() == EntityType.WITHER && WAS_CRIT.get()) {
                 WAS_CRIT.remove();
-                PlayerData.setPermanentUpgrade4(player);
+                PlayerData.setPermanentUpgrade(player, PermanentUpgrade.UPGRADE_4);
             }
         }
     }

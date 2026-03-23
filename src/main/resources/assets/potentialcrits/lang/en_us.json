@@ -21,16 +21,24 @@
   "enchantment.potentialcrits.umbral_crit" : "Umbral Crit",
   "enchantment.potentialcrits.vampire_crit" : "Vampire Crit",
   "enchantment.potentialcrits.sunder_crit" : "Sunder Crit",
+  "enchantment.potentialcrits.ice_crit" : "Ice Crit",
+  "enchantment.potentialcrits.harvest_crit" : "Harvest Crit",
 
   "effect.potentialcrits.heavy": "Heavy",
   "effect.potentialcrits.shielded": "Shielded",
   "effect.potentialcrits.berserker": "Berserker",
   "effect.potentialcrits.accuracy": "Accuracy",
+  "effect.potentialcrits.exposed": "Exposed",
 
   "creativetab.potential_crits.potential_crits": "Potential Crits",
 
   "item.potentialcrits.crit_gem": "Crit Gem",
   "block.potentialcrits.crit_ore": "Crit Ore",
+  "block.potentialcrits.deepslate_crit_ore": "Deepslate Crit Ore",
+
+  "item.potentialcrits.crit_cookie": "Crit Cookie",
+  "item.potentialcrits.crit_heart": "Heart of the Crits",
+  "item.potentialcrits.crit_pie": "Jackpot Pie",
 
   "item.minecraft.potion.effect.accuracy_potion": "Accuracy Potion",
   "item.minecraft.splash_potion.effect.accuracy_potion": "Accuracy Splash Potion",

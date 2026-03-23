@@ -11,20 +11,22 @@ public class CritRegistry {
 
     static {
         // If crits are not in this list, ModEvents won't trigger them.
-        register(new SuperCritEffect());
-        register(new FireCritEffect());
+        register(new SuperCritEffect()); // Improved vanilla crits
+        register(new FireCritEffect()); // Flat damage
         register(new ThunderCritEffect());
         register(new UmbralCritEffect());
         register(new ShieldCritEffect());
         register(new BerserkCritEffect());
         register(new SmashCritEffect());
-        register(new WaterCritEffect());
+        register(new SunderCritEffect());
+        register(new HarvestCritEffect());
+        register(new IceCritEffect());
+        register(new WaterCritEffect()); // Mixed damage
+        register(new VampireCritEffect()); // Percentage damage
         register(new DarkCritEffect());
         register(new LightCritEffect());
         register(new GroundCritEffect());
-        register(new TrueCritEffect());
-        register(new VampireCritEffect());
-        register(new SunderCritEffect());
+        register(new TrueCritEffect()); // True damage
         // Add more here.
     }
 

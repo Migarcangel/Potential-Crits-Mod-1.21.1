@@ -49,6 +49,8 @@ public class ModEnchantments {
     public static final ResourceKey<Enchantment> UMBRAL_CRIT = createCrit("umbral_crit");
     public static final ResourceKey<Enchantment> VAMPIRE_CRIT = createCrit("vampire_crit");
     public static final ResourceKey<Enchantment> SUNDER_CRIT = createCrit("sunder_crit");
+    public static final ResourceKey<Enchantment> ICE_CRIT = createCrit("ice_crit");
+    public static final ResourceKey<Enchantment> HARVEST_CRIT = createCrit("harvest_crit");
 
     // Item Tags
     public static final TagKey<Item> SWORD_SHIELD =
@@ -78,6 +80,10 @@ public class ModEnchantments {
     public static final TagKey<Item> AXE_MACE =
             TagKey.create(Registries.ITEM,
                     ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "enchantable/axe_mace"));
+
+    public static final TagKey<Item> HOE =
+            TagKey.create(Registries.ITEM,
+                    ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "enchantable/hoe"));
 
     public static void bootstrap(BootstrapContext<Enchantment> context) {
         var enchantments = context.lookup(Registries.ENCHANTMENT);
@@ -293,6 +299,33 @@ public class ModEnchantments {
                 .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.SUNDER_SHIELD_EXCLUSIVE))
                 .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
                         EnchantmentTarget.VICTIM, new SunderCritEnchantmentEffect()));
+
+        // ICE CRIT
+        register(context, ICE_CRIT, Enchantment.enchantment(Enchantment.definition(
+                        items.getOrThrow(SWORD_TRIDENT),
+                        items.getOrThrow(SWORD_TRIDENT),
+                        4,
+                        4,
+                        Enchantment.dynamicCost(10, 7),
+                        Enchantment.dynamicCost(20, 7),
+                        4,
+                        EquipmentSlotGroup.MAINHAND))
+                .exclusiveWith(enchantments.getOrThrow(ModEnchantmentTags.FIRE_ICE_EXCLUSIVE))
+                .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
+                        EnchantmentTarget.VICTIM, new IceCritEnchantmentEffect()));
+
+        // HARVEST CRIT
+        register(context, HARVEST_CRIT, Enchantment.enchantment(Enchantment.definition(
+                        items.getOrThrow(HOE),
+                        items.getOrThrow(HOE),
+                        4,
+                        8,
+                        Enchantment.dynamicCost(10, 7),
+                        Enchantment.dynamicCost(20, 7),
+                        4,
+                        EquipmentSlotGroup.MAINHAND))
+                .withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER,
+                        EnchantmentTarget.VICTIM, new HarvestCritEnchantmentEffect()));
     }
 
     private static void register(BootstrapContext<Enchantment> registry, ResourceKey<Enchantment> key,

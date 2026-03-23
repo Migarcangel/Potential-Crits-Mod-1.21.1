@@ -31,10 +31,11 @@ public class ThunderCritEffect implements CritEffect {
 
         boolean thunder = player.level().isThundering();
 
-        chance += level * 0.1f;
+        float baseChance = 0.1f;
         if (thunder) {
-            chance = chance * 2;
+            baseChance *= 2;
         }
+        chance += level * baseChance;
 
         if (player.level().random.nextFloat() < chance) {
             // It may apply additional damage because of the lightning itself. Not consistent though, only sometimes.

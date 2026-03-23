@@ -7,6 +7,7 @@ import com.migar.potentialcrits.loot.AddLootTableModifier;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
@@ -19,18 +20,41 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
         super(output, registries, PotentialCrits.MODID);
     }
 
+    private record ItemEntry(String name, String target, float chance, Item item) {}
     private record ModifierEntry(String name, String target, float chance, String book) {}
 
     @Override
     protected void start() {
 
-        this.add("crit_gem_ancient",
-                new AddItemModifier(new LootItemCondition[] {
-                        new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("chests/ancient_city")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.25f).build()
-                }, ModItems.CRIT_GEM.get()));
+        ItemEntry[] items = {
+                // CRIT COOKIES
+                new ItemEntry("crit_cookie_ancient", "chests/ancient_city", 0.75f, ModItems.CRIT_COOKIE.get()),
+                new ItemEntry("crit_cookie_mineshaft", "chests/abandoned_mineshaft", 0.5f, ModItems.CRIT_COOKIE.get()),
+                new ItemEntry("crit_cookie_dungeon", "chests/simple_dungeon", 0.75f, ModItems.CRIT_COOKIE.get()),
+
+                // CRIT PIES
+                new ItemEntry("crit_pie_ancient", "chests/ancient_city", 0.15f, ModItems.CRIT_PIE.get()),
+                new ItemEntry("crit_pie_mineshaft", "chests/abandoned_mineshaft", 0.1f, ModItems.CRIT_PIE.get()),
+                new ItemEntry("crit_pie_dungeon", "chests/simple_dungeon", 0.1f, ModItems.CRIT_PIE.get()),
+        };
+
+        for (ItemEntry entry : items) {
+            LootItemCondition[] conditions = new LootItemCondition[] {
+                    new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace(entry.target)).build(),
+                    LootItemRandomChanceCondition.randomChance(entry.chance).build()
+            };
+
+            this.add(entry.name, new AddItemModifier(conditions, entry.item));
+        }
 
         ModifierEntry[] modifiers = {
+                // CRIT GEMS
+                new ModifierEntry("crit_gems", "chests/ancient_city", 1f, "chests/crit_gems"),
+                new ModifierEntry("crit_gems", "chests/abandoned_mineshaft", 0.75f, "chests/crit_gems"),
+                new ModifierEntry("crit_gems_dungeon", "chests/simple_dungeon", 0.75f, "chests/crit_gems"),
+                new ModifierEntry("crit_gems_buried_treasure", "chests/buried_treasure", 1f, "chests/crit_gems"),
+                new ModifierEntry("crit_gems_library", "chests/stronghold_library", 0.75f, "chests/crit_gems"),
+
                 // RANDOM CRIT
                 new ModifierEntry("random_crit_library", "chests/stronghold_library", 0.5f, "chests/random_crit_library"),
 
@@ -80,7 +104,14 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
                 // SUNDER CRIT
                 new ModifierEntry("sunder_crit_vindicator", "entities/vindicator", 0.05f, "entities/sunder_crit_book"),
-                new ModifierEntry("sunder_crit_brute", "entities/piglin_brute", 0.15f, "entities/sunder_crit_book")
+                new ModifierEntry("sunder_crit_brute", "entities/piglin_brute", 0.15f, "entities/sunder_crit_book"),
+
+                // ICE CRIT
+                new ModifierEntry("ice_crit_stray", "entities/stray", 0.15f, "entities/ice_crit_book_e"),
+                new ModifierEntry("ice_crit_igloo", "chests/igloo_chest", 1, "entities/ice_crit_book_c"),
+
+                // HARVEST CRIT
+                new ModifierEntry("harvest_crit_ancient", "chests/ancient_city", 0.5f, "chests/harvest_crit_book")
         };
 
         for (ModifierEntry entry : modifiers) {

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "potentialcrits:crit_gem"
+    },
+    "B": {
+      "item": "minecraft:cookie"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "count": 2,
+    "id": "potentialcrits:crit_cookie"
+  }
+}

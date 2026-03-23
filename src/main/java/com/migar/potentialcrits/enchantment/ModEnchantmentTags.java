@@ -8,6 +8,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 
 public class ModEnchantmentTags {
     public static final TagKey<Enchantment> FIRE_WATER_EXCLUSIVE = create("fire_water_exclusive");
+    public static final TagKey<Enchantment> FIRE_ICE_EXCLUSIVE = create("fire_ice_exclusive");
     public static final TagKey<Enchantment> FIRE_UMBRAL_EXCLUSIVE = create("fire_umbral_exclusive");
     public static final TagKey<Enchantment> THUNDER_UMBRAL_EXCLUSIVE = create("thunder_umbral_exclusive");
 

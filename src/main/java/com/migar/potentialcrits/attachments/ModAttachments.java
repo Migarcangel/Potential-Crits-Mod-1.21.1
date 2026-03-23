@@ -1,6 +1,7 @@
 package com.migar.potentialcrits.attachments;
 
 import com.migar.potentialcrits.PotentialCrits;
+import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -15,6 +16,24 @@ public class ModAttachments {
     public static final DeferredHolder<AttachmentType<?>,AttachmentType<Integer>> PERMANENT_CHANCE =
             ATTACHMENT_TYPES.register(
                     "permanent_chance",
+                    () -> AttachmentType.builder(() -> 0)
+                            .serialize(Codec.INT)
+                            .copyOnDeath()
+                            .build()
+            );
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<CompoundTag>> CRITS_PROGRESS =
+            ATTACHMENT_TYPES.register(
+                    "crits_progress",
+                    () -> AttachmentType.builder(() -> new CompoundTag())
+                            .serialize(CompoundTag.CODEC)
+                            .copyOnDeath()
+                            .build()
+            );
+
+    public static final DeferredHolder<AttachmentType<?>,AttachmentType<Integer>> TOTAL_CRITS =
+            ATTACHMENT_TYPES.register(
+                    "total_crits",
                     () -> AttachmentType.builder(() -> 0)
                             .serialize(Codec.INT)
                             .copyOnDeath()

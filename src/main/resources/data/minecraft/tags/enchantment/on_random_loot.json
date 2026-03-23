@@ -9,6 +9,10 @@
     "potentialcrits:shield_crit",
     "potentialcrits:berserk_crit",
     "potentialcrits:smash_crit",
-    "potentialcrits:umbral_crit"
+    "potentialcrits:umbral_crit",
+    "potentialcrits:sunder_crit",
+    "potentialcrits:vampire_crit",
+    "potentialcrits:ice_crit",
+    "potentialcrits:harvest_crit"
   ]
 }

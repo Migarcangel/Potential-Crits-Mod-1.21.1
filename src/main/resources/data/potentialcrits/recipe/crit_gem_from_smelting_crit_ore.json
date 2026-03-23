@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.25,
+  "group": "crit_gem",
+  "ingredient": {
+    "item": "potentialcrits:crit_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "potentialcrits:crit_gem"
+  }
+}
