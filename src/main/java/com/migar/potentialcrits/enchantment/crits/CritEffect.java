@@ -9,7 +9,7 @@ public interface CritEffect {
     /**
      * Applies the crit
      */
-    boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance);
+    boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance, int upgradeLevel);
 
     /**
      * Particle and sound specific of the crit

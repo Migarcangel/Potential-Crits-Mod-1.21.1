@@ -18,7 +18,7 @@ public class LightCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "light_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance, int upgradeLevel) {
         LivingEntity target = event.getEntity();
 
         chance += level * 0.05f;
@@ -31,12 +31,21 @@ public class LightCritEffect implements CritEffect {
 
             if(undead) {
                 newDamage = damage * 1.25f;
+                if(upgradeLevel >= 2) {
+                    newDamage *= 1.3f;
+                }
             } else {
-                newDamage = damage * 0.90f;
+                newDamage = damage * 0.875f;
+                if(upgradeLevel >= 1) {
+                    newDamage *= 0.9f;
+                }
             }
             event.setAmount(newDamage);
 
             target.addEffect(new MobEffectInstance(MobEffects.GLOWING,60,0));
+            if(upgradeLevel >= 3) {
+                target.setRemainingFireTicks(80);
+            }
             return true;
         }
         return false;

@@ -3,11 +3,11 @@ package com.migar.potentialcrits.enchantment.crits;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CritRegistry {
-    private static final Map<ResourceLocation, CritEffect> CRIT_EFFECTS = new HashMap<>();
+    private static final Map<ResourceLocation, CritEffect> CRIT_EFFECTS = new LinkedHashMap<>();
 
     static {
         // If crits are not in this list, ModEvents won't trigger them.

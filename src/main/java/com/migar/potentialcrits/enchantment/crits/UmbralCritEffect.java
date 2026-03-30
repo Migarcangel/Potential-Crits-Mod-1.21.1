@@ -18,7 +18,7 @@ public class UmbralCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "umbral_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance, int upgradeLevel) {
         LivingEntity target = event.getEntity();
 
         chance += level * 0.1f;
@@ -26,26 +26,41 @@ public class UmbralCritEffect implements CritEffect {
 
         int light = target.level().getMaxLocalRawBrightness(pos);
         float newDamage = 0;
-        int duration = 20 * level;
-        if(light > 7 && !target.isOnFire()) {
+
+        int blindDuration = 20 * level;
+        int inviDuration = 0;
+
+        if(light > 7 ||  target.isOnFire()) {
             return false;
         } else if (light >= 5) {
             newDamage = 2;
+            inviDuration = 40;
         } else if (light >= 2) {
             newDamage = 3;
             chance += 0.05f;
+            inviDuration = 80;
         } else if (light >= 0) {
             newDamage = 4;
             chance += 0.1f;
-            duration += 40; // 2 extra seconds of blindness
+            if(upgradeLevel >= 1) {
+                blindDuration += 40;
+            }
+            inviDuration = 160;
         }
 
         if (player.level().random.nextFloat() < chance) {
             float damage = event.getAmount();
 
+            if(upgradeLevel >= 3 && target.getHealth()/target.getMaxHealth() < 0.3f) {
+                newDamage *= 2;
+            }
+
             event.setAmount(damage + newDamage);
 
-            target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS,duration,0));
+            target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS,blindDuration,0));
+            if(upgradeLevel >= 2) {
+                player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY,inviDuration,0));
+            }
             return true;
         }
         return false;

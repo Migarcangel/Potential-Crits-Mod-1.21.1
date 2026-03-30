@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
@@ -20,16 +21,26 @@ public class SunderCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "sunder_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance, int upgradeLevel) {
         LivingEntity target = event.getEntity();
 
         chance += level * 0.05f;
+        if(upgradeLevel >= 3) {
+            chance += 0.1f;
+        }
         float damage = event.getAmount();
 
         if (player.level().random.nextFloat() < chance) {
+            if(upgradeLevel >= 1 && player.level().random.nextFloat() < 0.5f) {
+                player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,100,0));
+            }
             float newDamage = damage + 5;
 
-            target.addEffect(new MobEffectInstance(ModEffects.EXPOSED_EFFECT ,80,0));
+            int duration = 80 + level * 20;
+            if(upgradeLevel >= 2) {
+                duration += 4;
+            }
+            target.addEffect(new MobEffectInstance(ModEffects.EXPOSED_EFFECT ,duration,0));
 
             event.setAmount(newDamage);
             return true;

@@ -1,12 +1,14 @@
 package com.migar.potentialcrits.enchantment.crits;
 
 import com.migar.potentialcrits.PotentialCrits;
+import com.migar.potentialcrits.effect.ModEffects;
 import com.migar.potentialcrits.event.ModEvents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
@@ -16,15 +18,18 @@ public class TrueCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "true_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance, int upgradeLevel) {
         LivingEntity target = event.getEntity();
 
         chance += level * 0.05f;
 
         if (ModEvents.WAS_VANILLA_CRIT.get() && player.level().random.nextFloat() < chance) {
-            float newHealth = getNewHealth(event, level, target);
+            float newHealth = getNewHealth(event, level, target,upgradeLevel);
 
             target.setHealth(newHealth);
+            if(upgradeLevel >= 3 && player.level().random.nextFloat() < 0.5f) {
+                target.addEffect(new MobEffectInstance(ModEffects.EXPOSED_EFFECT,60,0));
+            }
             return true;
 
         }
@@ -32,14 +37,22 @@ public class TrueCritEffect implements CritEffect {
         return false;
     }
 
-    private static float getNewHealth(LivingIncomingDamageEvent event, int level, LivingEntity target) {
+    private static float getNewHealth(LivingIncomingDamageEvent event, int level, LivingEntity target, int upgradeLevel) {
         float damage = event.getOriginalAmount();
 
         // True damage
-        float trueDamage = damage * 0.04f * level;
+        float multiplierTrueDamage = 0.04f;
+        if(upgradeLevel >= 2) {
+            multiplierTrueDamage += 0.05f;
+        }
+        float trueDamage = damage * multiplierTrueDamage * level;
 
         // Damage depending on health of the target
-        float maxHealthDamage = target.getMaxHealth() * 0.01f;
+        float multiplierMaxHealth = 0.005f;
+        if(upgradeLevel >= 1) {
+            multiplierMaxHealth = 0.01f;
+        }
+        float maxHealthDamage = target.getMaxHealth() * multiplierMaxHealth;
         maxHealthDamage = Math.min(maxHealthDamage, 3.0f);
 
         // Combines both damages.

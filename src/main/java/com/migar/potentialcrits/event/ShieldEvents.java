@@ -1,6 +1,7 @@
 package com.migar.potentialcrits.event;
 
 import com.migar.potentialcrits.PotentialCrits;
+import com.migar.potentialcrits.attachments.PlayerData;
 import com.migar.potentialcrits.effect.ModEffects;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
@@ -64,9 +65,9 @@ public class ShieldEvents {
 
                 level = getEnchantmentLevel(weapon, player, SHIELD_ENCHANTMENT);
 
+                int upgradeLevel = PlayerData.getUpgradeLevel(player,  SHIELD_ENCHANTMENT);
                 chance = 0.5f;
-
-                if(level > 0 && player.level().random.nextFloat() < chance) { // 50% of leveling up.
+                if(upgradeLevel >= 3 && level > 0 && player.level().random.nextFloat() < chance) { // 50% of leveling up.
                     amplifier = 1;
                 }
                 player.addEffect(new MobEffectInstance(ModEffects.SHIELD_EFFECT,duration + 200,amplifier));

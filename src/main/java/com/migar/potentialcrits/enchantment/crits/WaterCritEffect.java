@@ -20,10 +20,14 @@ public class WaterCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "water_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance, int upgradeLevel) {
         LivingEntity target = event.getEntity();
 
         chance += level * 0.05f;
+
+        if(upgradeLevel >= 1){
+            chance += 0.05f;
+        }
 
         if (player.isInWaterRainOrBubble() && player.level().random.nextFloat() < chance) {
             float damage = event.getAmount();
@@ -36,28 +40,35 @@ public class WaterCritEffect implements CritEffect {
             float multiplier = 1.0f;
             boolean aquatic = target.getType().is(EntityTypeTags.AQUATIC) || target.getType() == EntityType.DROWNED;
 
-            if(aquatic) {
+            if(upgradeLevel >= 2 && aquatic) {
                 multiplier += 0.10f;
             }
 
-            BlockPos pos = player.blockPosition();
-            int depth = 0;
-            BlockState block = player.level().getBlockState(pos);
-
-            while(block.is(Blocks.WATER)) {
-                pos = pos.above();
-                block = player.level().getBlockState(pos);
-                depth++;
-            }
-
-            if(depth >= 5 && depth < 15) multiplier += 0.05f;
-            else if(depth >= 15 && depth < 30) multiplier += 0.10f;
-            else if(depth >= 30) multiplier += 0.15f;
+            multiplier = getDepthMultiplier(player, multiplier);
 
             event.setAmount(newDamage * multiplier);
+
+            player.setAirSupply(player.getAirSupply() + player.getMaxAirSupply()/2);
             return true;
         }
         return false;
+    }
+
+    private float getDepthMultiplier(Player player, float multiplier) {
+        BlockPos pos = player.blockPosition();
+        int depth = 0;
+        BlockState block = player.level().getBlockState(pos);
+
+        while(block.is(Blocks.WATER)) {
+            pos = pos.above();
+            block = player.level().getBlockState(pos);
+            depth++;
+        }
+
+        if(depth >= 5 && depth < 15) multiplier += 0.05f;
+        else if(depth >= 15 && depth < 30) multiplier += 0.10f;
+        else if(depth >= 30) multiplier += 0.15f;
+        return multiplier;
     }
 
     @Override

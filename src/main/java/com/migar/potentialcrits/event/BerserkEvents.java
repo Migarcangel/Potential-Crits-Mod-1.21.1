@@ -1,5 +1,6 @@
 package com.migar.potentialcrits.event;
 
+import com.migar.potentialcrits.attachments.PlayerData;
 import com.migar.potentialcrits.effect.ModEffects;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -9,12 +10,18 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
+import static com.migar.potentialcrits.event.EventUtils.BERSERK_CRIT;
+
+
 public class BerserkEvents {
+
+    public static final String COOLDOWN_TAG = "berserk_crit_cooldown";
 
     public static void onEffectExpired(MobEffectEvent.Expired event) {
         LivingEntity entity = event.getEntity();
@@ -22,10 +29,9 @@ public class BerserkEvents {
         MobEffectInstance instance = event.getEffectInstance();
 
         if (instance != null && instance.is(ModEffects.BERSERKER_EFFECT)) {
-
-            entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 0));
-            entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
-            entity.addEffect(new MobEffectInstance(ModEffects.HEAVY_EFFECT, 200, 0));
+            if (entity instanceof Player player) {
+                applyPenalty(player, false);
+            }
 
             if (entity.level() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(
@@ -49,6 +55,50 @@ public class BerserkEvents {
                     0.6f + entity.level().random.nextFloat() * 0.2f
             );
         }
+    }
+
+    public static void onDeath(LivingDeathEvent event) {
+        if (event.getEntity() instanceof Player player && player.hasEffect(ModEffects.BERSERKER_EFFECT)) {
+            applyPenalty(player, true);
+
+            event.setCanceled(true);
+            player.setHealth(2); // Survive with 1 heart
+            player.level().playSound(
+                    null,
+                    player.getX(), player.getY(), player.getZ(),
+                    SoundEvents.TOTEM_USE,
+                    SoundSource.PLAYERS,
+                    0.8f,
+                    0.5f + player.level().random.nextFloat() * 0.2f
+            );
+        }
+    }
+
+    private static void applyPenalty(Player player, boolean death) {
+        int upgradeLevel = PlayerData.getUpgradeLevel(player, BERSERK_CRIT);
+
+        int effectDuration = 200;
+        int cooldownDuration = 600;
+
+        if(death) {
+            effectDuration *= 2;
+            cooldownDuration *= 6;
+        }
+        if(upgradeLevel >= 3){
+            player.addEffect(new MobEffectInstance(ModEffects.HEAVY_EFFECT, effectDuration/2, 0));
+            setCooldown(player, cooldownDuration/2);
+        } else {
+            player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, effectDuration, 0));
+            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, effectDuration, 0));
+            player.addEffect(new MobEffectInstance(ModEffects.HEAVY_EFFECT, effectDuration, 0));
+
+            setCooldown(player, cooldownDuration);
+        }
+    }
+
+    private static void setCooldown(Player player, int duration) {
+        long cooldownEnd = player.level().getGameTime() + duration;
+        player.getPersistentData().putLong(COOLDOWN_TAG, cooldownEnd);
     }
 
     public static void onKill(LivingDeathEvent event) {

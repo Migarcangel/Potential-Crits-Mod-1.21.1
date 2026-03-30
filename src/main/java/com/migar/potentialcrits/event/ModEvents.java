@@ -8,9 +8,6 @@ import com.migar.potentialcrits.enchantment.crits.CritRegistry;
 import com.migar.potentialcrits.enchantment.crits.CritUtils;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.HoeItem;
@@ -32,11 +29,12 @@ public class ModEvents {
     public static final ThreadLocal<Boolean> WAS_VANILLA_CRIT =  ThreadLocal.withInitial(() -> false);
     public static final ThreadLocal<Boolean> WAS_SUPER_CRIT =  ThreadLocal.withInitial(() -> false);
     public static final ThreadLocal<Boolean> WAS_FROZEN =  ThreadLocal.withInitial(() -> false);
-
     public static final ThreadLocal<Integer> HARVEST_CRIT_LEVEL =  ThreadLocal.withInitial(() -> 0);
+    public static final ThreadLocal<Float> SUPER_CRIT_CHANCE =  ThreadLocal.withInitial(() -> 0f);
 
     @SubscribeEvent
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
+        ThunderEvents.onLivingIncomingDamage(event);
         ShieldEvents.onLivingIncomingDamage(event);
 
         if (!(event.getSource().getEntity() instanceof Player player)) return;
@@ -73,7 +71,9 @@ public class ModEvents {
             int level = getEnchantmentLevel(weapon, player, critEffect.getId());
 
             if (level > 0) {
-                if(critEffect.applyEffect(player, event, level, chance)) {
+                int upgradeLevel = PlayerData.getUpgradeLevel(player,critEffect.getId());
+
+                if(critEffect.applyEffect(player, event, level, chance, upgradeLevel)) {
                     critsApplied += 1;
                     critEffect.playSpecialEffects(player,event.getEntity());
 
@@ -108,18 +108,27 @@ public class ModEvents {
             }
 
             level = getEnchantmentLevel(player.getMainHandItem(), player, EventUtils.SUPER_CRIT);
+            int upgradeLevel = PlayerData.getUpgradeLevel(player,EventUtils.SUPER_CRIT);
 
             float chance = getInitialChance(player);
-            chance += 0.05f * level;
+            chance += 0.04f * level;
+            if(upgradeLevel >= 3) {
+                chance += SUPER_CRIT_CHANCE.get();
+            }
 
-            if (level > 0 && player.level().random.nextFloat() < chance) {
-                float multiplier = 0.1f * level;
-                event.setDamageMultiplier(1.5f + multiplier);
+            if (level > 0) {
+                if (player.level().random.nextFloat() < chance) {
+                    float multiplier = 0.1f * level;
+                    event.setDamageMultiplier(1.5f + multiplier);
 
-                if (event.getTarget() instanceof LivingEntity target) {
-                    target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,60,0));
+                    WAS_SUPER_CRIT.set(true);
+                    SUPER_CRIT_CHANCE.remove();
                 }
-                WAS_SUPER_CRIT.set(true);
+                else {
+                    if(upgradeLevel >= 3) {
+                        SUPER_CRIT_CHANCE.set(SUPER_CRIT_CHANCE.get() + 0.04f);
+                    }
+                }
             }
         }
     }
@@ -146,6 +155,7 @@ public class ModEvents {
     @SubscribeEvent
     public static void onKill(LivingDeathEvent event) {
         BerserkEvents.onKill(event);
+        BerserkEvents.onDeath(event);
         HarvestEvents.onKill(event);
         UpgradesEvents.onKill(event);
     }

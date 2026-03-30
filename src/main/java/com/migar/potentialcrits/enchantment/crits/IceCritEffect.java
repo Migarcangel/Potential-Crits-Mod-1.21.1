@@ -10,6 +10,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
@@ -23,11 +25,11 @@ public class IceCritEffect implements CritEffect {
 
     private static final TagKey<Biome> COLD_BIOMES = TagKey.create(
             Registries.BIOME,
-            ResourceLocation.parse("c:is_cold")  // Tag común para biomas fríos
+            ResourceLocation.parse("c:is_cold")
     );
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance, int upgradeLevel) {
         LivingEntity target = event.getEntity();
 
         chance += level * 0.05f;
@@ -47,10 +49,22 @@ public class IceCritEffect implements CritEffect {
 
             if(frozen) {
                 newDamage = damage + 5;
-                target.setTicksFrozen(0);
+                boolean shouldBreakFreeze = upgradeLevel < 2 || !(player.level().random.nextFloat() < 0.5f);
+
+                if(shouldBreakFreeze) {
+                    target.setTicksFrozen(0);
+                }
+
+                if(upgradeLevel >= 3) {
+                    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,200, 0));
+                }
+
             } else {
                 newDamage = damage + 2;
-                target.setTicksFrozen(340);
+                target.setTicksFrozen(300);
+                if(upgradeLevel >= 1) {
+                    target.setTicksFrozen(380);
+                }
             }
 
             event.setAmount(newDamage);

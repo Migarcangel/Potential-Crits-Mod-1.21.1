@@ -7,6 +7,9 @@
   "examplemod.configuration.magicNumberIntroduction": "Magic Number Text",
   "examplemod.configuration.magicNumber": "Magic Number",
 
+  "crit.progress.potentialcrits.unlocked" : "Crit Upgrade Unlocked",
+  "message.potentialcrits.berserk_cooldown" : "§cBerserk on cooldown for %s seconds",
+
   "enchantment.potentialcrits.fire_crit" : "Fire Crit",
   "enchantment.potentialcrits.thunder_crit" : "Thunder Crit",
   "enchantment.potentialcrits.dark_crit" : "Dark Crit",
@@ -35,6 +38,8 @@
   "item.potentialcrits.crit_gem": "Crit Gem",
   "block.potentialcrits.crit_ore": "Crit Ore",
   "block.potentialcrits.deepslate_crit_ore": "Deepslate Crit Ore",
+
+  "item.potentialcrits.crit_knowledge_book": "Crit Knowledge Book",
 
   "item.potentialcrits.crit_cookie": "Crit Cookie",
   "item.potentialcrits.crit_heart": "Heart of the Crits",

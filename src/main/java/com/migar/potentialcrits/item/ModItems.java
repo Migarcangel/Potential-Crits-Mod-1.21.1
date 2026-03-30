@@ -19,6 +19,9 @@ public class ModItems {
     public static final DeferredItem<Item> CRIT_HEART = ITEMS.register("crit_heart",
             () -> new CritHeartItem(new Item.Properties()));
 
+    public static final DeferredItem<Item> CRIT_KNOWLEDGE_BOOK = ITEMS.register("crit_knowledge_book",
+            () -> new CritBookItem(new Item.Properties()));
+
     public static final DeferredItem<Item> CRIT_PIE = ITEMS.register("crit_pie",
             () -> new Item(new Item.Properties().food(ModFoodProperties.CRIT_PIE)));
 

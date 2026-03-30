@@ -21,25 +21,43 @@ public class VampireCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "vampire_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance, int upgradeLevel) {
         LivingEntity target = event.getEntity();
 
         chance += level * 0.05f;
 
+        if(upgradeLevel >= 3) {
+            if(target.getHealth() < target.getMaxHealth()/2) {
+                chance += 0.1f;
+            } else if(target.getHealth() < target.getMaxHealth()/5) {
+                chance += 0.2f;
+            }
+        }
+
         if (player.level().random.nextFloat() < chance) {
             float damage = event.getAmount();
-            float newDamage;
+            float newDamage = damage;
 
             boolean undead = target.getType().is(EntityTypeTags.UNDEAD);
 
             if(!undead) {
                 float health = Math.min(target.getHealth(),30);
-                newDamage = damage + health * 0.1f;
+                if(upgradeLevel >= 2 && target.getHealth() == target.getMaxHealth()) {
+                    newDamage = damage + health * 0.2f;
+                } else {
+                    newDamage = damage + health * 0.1f;
+                }
 
                 player.heal((health*0.1f)/2);
             } else {
-                newDamage = damage;
-                player.addEffect(new MobEffectInstance(MobEffects.WITHER,60,1));
+                float debuffChance = 0.5f;
+                if(upgradeLevel >= 1) {
+                    debuffChance = 0.25f;
+                }
+                if(player.level().random.nextFloat() < debuffChance) {
+                    newDamage = damage;
+                    player.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 1));
+                }
             }
 
             event.setAmount(newDamage);

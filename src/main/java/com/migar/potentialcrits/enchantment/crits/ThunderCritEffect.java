@@ -1,25 +1,30 @@
 package com.migar.potentialcrits.enchantment.crits;
 
 import com.migar.potentialcrits.PotentialCrits;
+import com.migar.potentialcrits.effect.ModEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+
+import java.util.List;
 
 public class ThunderCritEffect implements CritEffect {
     private static final ResourceLocation ID =
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "thunder_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance, int upgradeLevel) {
         LivingEntity target = event.getEntity();
 
         BlockPos pos = target.blockPosition().above();
@@ -38,28 +43,58 @@ public class ThunderCritEffect implements CritEffect {
         chance += level * baseChance;
 
         if (player.level().random.nextFloat() < chance) {
-            // It may apply additional damage because of the lightning itself. Not consistent though, only sometimes.
-            LightningBolt lightning = EntityType.LIGHTNING_BOLT.spawn(
-                    (ServerLevel) player.level(),
-                    target.getOnPos(),
-                    MobSpawnType.TRIGGERED
-            );
+            // Minimum damage. This is supposed to be unknown
+            summonLightning(target, player, 0.1f);
 
-            if (lightning != null) {
-                // Minimum damage. This is supposed to be unknown
-                lightning.setDamage(0.1f);
-                // Cancels the lightning fire
-                lightning.getPersistentData().putBoolean("potentialcrits_no_fire", true);
+            if(upgradeLevel >= 1 && target.isInWaterOrRain()) {
+                target.addEffect(new MobEffectInstance(ModEffects.HEAVY_EFFECT,30,9));
             }
 
             float damage = event.getAmount();
             float newDamage = 4;
+            if(upgradeLevel >= 3) {
+                newDamage++;
+            }
             event.setAmount(damage + newDamage);
+
+            if(upgradeLevel >= 0 && target.level().isThundering()) {
+                summonLightningsInArea(target,player,newDamage);
+            }
 
             return true;
 
         }
         return false;
+    }
+
+    private void summonLightningsInArea(LivingEntity target, Player player,  float newDamage) {
+        double radius = 1.0;
+        AABB area = target.getBoundingBox().inflate(radius, radius, radius);
+
+        List<LivingEntity> nearbyEntities = target.level().getEntitiesOfClass(
+                LivingEntity.class,
+                area,
+                entity -> entity != target && entity != player && entity.isAlive()
+        );
+
+        for (LivingEntity nearbyEntity : nearbyEntities) {
+            summonLightning(nearbyEntity,  player,  newDamage);
+        }
+    }
+
+    private void summonLightning(LivingEntity target, Player player, float newDamage) {
+        LightningBolt lightning = EntityType.LIGHTNING_BOLT.spawn(
+                (ServerLevel) player.level(),
+                target.getOnPos(),
+                MobSpawnType.TRIGGERED
+        );
+
+        if (lightning != null) {
+            lightning.setDamage(newDamage);
+            // Cancels the lightning fire
+            lightning.getPersistentData().putBoolean("potentialcrits_no_fire", true);
+            lightning.getPersistentData().putBoolean("potentialcrits_ignore_player", true);
+        }
     }
 
     @Override

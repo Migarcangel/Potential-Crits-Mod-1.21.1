@@ -16,15 +16,18 @@ public class HarvestCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "harvest_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
-        LivingEntity target = event.getEntity();
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance, int upgradeLevel) {
 
         chance += 0.33f;
 
         if (player.level().random.nextFloat() < chance) {
             ModEvents.HARVEST_CRIT_LEVEL.set(level);
             float damage = event.getAmount();
-            float newDamage = damage + (level) ; // 1 * level
+            float scaling = 0.75f;
+            if(upgradeLevel >= 3){
+                scaling = 1f;
+            }
+            float newDamage = damage + (scaling * level) ; // 1 * level
 
 
             event.setAmount(newDamage);

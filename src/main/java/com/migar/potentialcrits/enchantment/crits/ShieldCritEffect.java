@@ -23,21 +23,27 @@ public class ShieldCritEffect implements CritEffect {
             ResourceLocation.fromNamespaceAndPath(PotentialCrits.MODID, "shield_crit");
 
     @Override
-    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance) {
+    public boolean applyEffect(Player player, LivingIncomingDamageEvent event, int level, float chance, int upgradeLevel) {
 
         chance += level * 0.2f;
+        ItemStack shield = player.getOffhandItem();
+        boolean hasShield = false;
+
+        if(player.getOffhandItem().getItem() instanceof net.minecraft.world.item.ShieldItem) {
+            hasShield = true;
+            if(upgradeLevel >= 1) {
+                chance += 0.1f;
+            }
+        }
 
         if (player.level().random.nextFloat() < chance) {
             float damage = event.getAmount() + 3;
+
             int amplifier = 0;
-
-            ItemStack shield = player.getOffhandItem();
-
-            if (shield.getItem() instanceof net.minecraft.world.item.ShieldItem) {
-                damage += 1.5f;
+            if (hasShield) {
                 if (getEnchantmentLevel(shield, player, ID) > 0) {
                     chance = 0.5f;
-                    if (player.level().random.nextFloat() < chance) {
+                    if (upgradeLevel >= 2 && player.level().random.nextFloat() < chance) {
                         amplifier = 1;
                     }
                 }

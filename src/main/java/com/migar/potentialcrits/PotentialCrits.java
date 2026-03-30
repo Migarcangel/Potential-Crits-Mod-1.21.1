@@ -2,6 +2,7 @@ package com.migar.potentialcrits;
 
 import com.migar.potentialcrits.attachments.ModAttachments;
 import com.migar.potentialcrits.block.ModBlocks;
+import com.migar.potentialcrits.command.ProgressionCommand;
 import com.migar.potentialcrits.effect.ModEffects;
 import com.migar.potentialcrits.enchantment.ModEnchantmentEffects;
 import com.migar.potentialcrits.event.ModEvents;
@@ -64,6 +65,9 @@ public class PotentialCrits {
 
         // Register Attachments (PlayerData)
         ModAttachments.register(modEventBus);
+
+        // Register Commands
+        NeoForge.EVENT_BUS.register(ProgressionCommand.class);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.

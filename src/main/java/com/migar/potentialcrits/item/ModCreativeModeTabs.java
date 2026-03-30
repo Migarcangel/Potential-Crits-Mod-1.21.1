@@ -34,6 +34,9 @@ public class ModCreativeModeTabs {
                     .icon(() -> new ItemStack(ModItems.CRIT_GEM.get()))
                     .title(Component.translatable("creativetab.potential_crits.potential_crits"))
                     .displayItems((itemDisplayParameters, output) -> {
+                        // Crit Knowledge Book
+                        output.accept(ModItems.CRIT_KNOWLEDGE_BOOK);
+
                         // Crit Gem
                         output.accept(ModItems.CRIT_GEM);
 
