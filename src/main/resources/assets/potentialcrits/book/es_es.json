@@ -1,0 +1,177 @@
+{
+"categories": [
+{
+"title": "Introduction",
+"content": "¡Bienvenido a Potential Crits! Este libro te guiará a través de las características del mod. Haz clic en el lado izquierdo o derecho del libro para pasar las páginas.",
+"subcategories": []
+},
+{
+"title": "Información general",
+"content": null,
+"subcategories": [
+{
+"title": "Mecánicas",
+"content": "Potential Crits es un mod que añade golpes críticos especiales a Minecraft. Estos son encantamientos y pueden obtenerse mediante varios métodos, no solo en la mesa de encantamientos. La mayoría se aplican a espadas, pero algunos también pueden aplicarse a otras armas.\n\nHay dos tipos de críticos: los Crits del mod y los críticos vanilla de Minecraft. Son diferentes y pueden coexistir. Los críticos vanilla infligen un 150% del daño y se realizan al golpear mientras estás cayendo.\n\nLos Crits del mod tienen un porcentaje de probabilidad de activarse. La suerte puede aumentar esta probabilidad. Algunos Crits necesitan que se cumplan ciertas condiciones para activarse, mientras que otros pueden aumentar el daño, mejorar la probabilidad de crítico o combinar varios de estos efectos.\n\nTodos los Crits necesitan infligir 4 puntos de daño o más para activarse.",
+"subcategories": []
+},
+{
+"title": "Compatibilidades",
+"content": "Algunos Crits son incompatibles entre sí. Por ejemplo, Fire Crit y Water Crit no pueden coexistir. Sin embargo, la mayoría son compatibles, por lo que puedes tener fácilmente 5 Crits activos al mismo tiempo.\n\nTodos los Crits pueden activarse simultáneamente si se cumplen sus condiciones y tienes suficiente suerte.\n\nEl orden en el que se aplican los Crits es el siguiente:\n1. Super Crit (crítico vanilla)\n2. Fire Crit (daño plano)\n3. Thunder Crit\n4. Umbral Crit\n5. Shield Crit\n6. Berserk Crit\n7. Smash Crit\n8. Sunder Crit\n9. Harvest Crit\n10. Ice Crit\n11. Water Crit (daño mixto)\n12. Vampire Crit (daño porcentual)\n13. Dark Crit\n14. Light Crit\n15. Ground Crit\n16. True Crit (daño porcentual verdadero)\n\nLos daños porcentuales se calculan después de los daños independientes. Por ejemplo, si un ataque hace +3 de daño y tienes un 15% de daño porcentual adicional:\n+3 * (1 + 0.15) = 3.45 (¡+0.45 de daño!)\n\nLos críticos vanilla se calculan antes que los Crits del mod. Por eso Super Crit aparece primero en el orden de aplicación.",
+"subcategories": []
+},
+{
+"title": "Obtención",
+"content": "Hay tres formas principales de obtener Crits: como botín aleatorio, mediante Wandering Traders y mediante botín específico.\n\nLos encantamientos de tesoro pueden aparecer en libros encantados encontrados en cofres o pescando. Existe una probabilidad adicional de encontrarlos en las bibliotecas de los Strongholds.\n\nLos Wandering Traders pueden vender Crits específicos.\n\nCada Crit también tiene ubicaciones concretas donde puede obtenerse. Esto fomenta conseguirlos activamente y explorar el mundo.",
+"subcategories": []
+}
+]
+},
+{
+"title": "Lista de Crits",
+"content": "Esta es la lista de todos los Crits disponibles en Potential Crits.",
+"subcategories": [
+{
+"title": "Early Game Crits",
+"content": null,
+"subcategories": [
+{
+"title": "Water Crit",
+"content": "Conviértete en el señor de las aguas profundas.\n- Armas: Espada, Tridente.\n- Nivel máximo: 3\n- Porcentaje por nivel: 5%\n- Condiciones para aplicarse: Estar en el agua.\n- Descripción: Hace +3 de daño. Otros +3 de daño si el enemigo también está en el agua.\n- Más daño adicional dependiendo de cuánta agua haya sobre ti.\n5+ bloques = 5%\n15+ bloques = 10%\n30+ bloques = 15%\n- Obtenido en: Ocean Ruins.\n- Incompatibilidades: Fire Crit.\n",
+"subcategories": []
+},
+{
+"title": "Ice Crit",
+"content": "Congela a tus enemigos hasta detenerlos.\n- Armas: Espada, Tridente.\n- Nivel máximo: 4\n- Porcentaje por nivel: 5%\n- Porcentaje de activación: Se duplica si el enemigo está congelado.\n- Condiciones para aplicarse: Estar en un bioma frío o que el enemigo ya esté congelado.\n- Descripción: Hace +2 de daño y congela al enemigo durante 10 segundos. Si el enemigo ya está congelado, interrumpe la congelación y hace +5 de daño.\n- Obtenido en: Igloos y Strays.\n- Incompatibilidades: Fire Crit.\n",
+"subcategories": []
+}
+]
+},
+{
+"title": "Early-Mid Game Crits",
+"content": null,
+"subcategories": [
+{
+"title": "Umbral Crit",
+"content": "Acecha en sus sombras.\n- Armas: Espada.\n- Nivel máximo: 3\n- Porcentaje por nivel: 10%\n- Condiciones para aplicarse: El nivel de luz del enemigo debe ser 7 o inferior y no debe estar en llamas.\n- Descripción: Aplica Ceguera I durante 1 segundo por nivel.\n- Nivel de luz 7-5: 0% de probabilidad adicional y +2 de daño.\n- Nivel de luz 5-2: 5% de probabilidad adicional y +3 de daño.\n- Nivel de luz 1-0: 10% de probabilidad adicional y +4 de daño.\n- Obtenido en: Simple Dungeons, Mineshafts.\n- Incompatibilidades: Fire Crit, Thunder Crit, Light Crit.\n",
+"subcategories": []
+},
+{
+"title": "Ground Crit",
+"content": "Húndelos en el suelo.\n- Armas: Espada, Hacha, Pico, Pala.\n- Nivel máximo: 1\n- Porcentaje: 25%\n- Condiciones para aplicarse: El enemigo y el atacante deben estar en el suelo.\n- Descripción: Hace un 50% de daño adicional y aplica el efecto Pesado. No puede realizar críticos vanilla.\n- Obtenido en: Mineshafts.\n- Incompatibilidades: Super Crit, True Crit, Smash Crit.\n",
+"subcategories": []
+},
+{
+"title": "Fire Crit",
+"content": "Consume las llamas del enemigo y clávalas profundo.\n- Armas: Espada.\n- Nivel máximo: 2\n- Porcentaje por nivel: 5%\n- Condiciones para aplicarse: El enemigo debe estar en llamas.\n- Descripción: Consume las llamas del enemigo. Por cada segundo restante de fuego, hace +1 de daño.\n- Obtenido en: Nether Fortresses.\n- Incompatibilidades: Water Crit, Umbral Crit, Ice Crit.\n",
+"subcategories": []
+}
+]
+},
+{
+"title": "Mid Game Crits",
+"content": null,
+"subcategories": [
+{
+"title": "Thunder Crit",
+"content": "Sé uno con la tormenta.\n- Armas: Espada, Tridente.\n- Nivel máximo: 2\n- Porcentaje por nivel: 10%\n- Porcentaje durante tormenta eléctrica: 20%\n- Condiciones para aplicarse: El enemigo y el atacante deben estar expuestos al cielo.\n- Descripción: Inflige 4 de daño al invocar un rayo.\n- Obtenido en: Mesa de Encantamientos.\n- Incompatibilidades: Umbral Crit.\n",
+"subcategories": []
+},
+{
+"title": "Dark Crit",
+"content": "Arrastra a los vivos hacia la oscuridad.\n- Armas: Espada, Hacha, Tridente, Maza.\n- Nivel máximo: 5\n- Porcentaje por nivel: 5%\n- Condiciones para aplicarse: Ninguna.\n- Descripción: Hace un 25% más de daño si el enemigo está vivo y no es un no-muerto. Hace un 12.5% menos de daño contra enemigos no-muertos. Aplica Oscuridad I durante 3 segundos.\n- Obtenido en: Brujas, Invocadores, Ancient Cities.\n- Incompatibilidades: Light Crit.\n",
+"subcategories": []
+},
+{
+"title": "Light Crit",
+"content": "Guía a los muertos hacia la luz.\n- Armas: Espada, Hacha, Tridente, Maza.\n- Nivel máximo: 5\n- Porcentaje por nivel: 5%\n- Condiciones para aplicarse: Ninguna.\n- Descripción: Hace un 25% más de daño contra enemigos no-muertos y un 12.5% menos de daño contra el resto. Aplica Brillo I durante 3 segundos.\n- Obtenido en: Comercio con sacerdotes.\n- Incompatibilidades: Dark Crit, Umbral Crit, Vampire Crit.\n",
+"subcategories": []
+}
+]
+},
+{
+"title": "Mid-Late Game Crits",
+"content": null,
+"subcategories": [
+{
+"title": "Shield Crit",
+"content": "Hazles creer que eres invencible.\n- Armas: Espada, Escudo, Hacha.\n- Nivel máximo: 1\n- Porcentaje: 20%\n- [ ESPADA / HACHA ]\n- Condiciones para aplicarse: Ninguna.\n- Descripción: Hace +3 de daño y +1 de daño por cada nivel de Blindado. Otorga Blindado I durante 10 segundos.\n- [ ESCUDO ]\n- Condiciones para aplicarse: Bloquear daño con el escudo.\n- Descripción: Otorga Blindado I. Si ya tienes el efecto, añade 10 segundos a su duración.\n- Obtenido en: Strongholds y Elder Guardians.\n- Incompatibilidades: Berserk Crit.\n",
+"subcategories": []
+},
+{
+"title": "Berserk Crit",
+"content": "Libera tu furia de su jaula.\n- Armas: Espada, Hacha.\n- Nivel máximo: 1\n- Porcentaje: 15%\n- Condiciones para aplicarse: Tener menos del 55% de salud.\n- Descripción: Hace +2 de daño y pierde un 15% de la salud restante. Otorga Berserk I durante 10 segundos.\n- Si ya tienes Berserk, añade 3 segundos a su duración (máximo 10 segundos) y hace +2 de daño adicional (+4 en total).\n- Obtenido en: Al matar Piglin Brutes y en Bastion Treasure.\n- Incompatibilidades: Shield Crit, Vampire Crit.\n",
+"subcategories": []
+},
+{
+"title": "Sunder Crit",
+"content": "Destroza sus armaduras y sus huesos.\n- Armas: Hacha, Maza.\n- Nivel máximo: 4\n- Porcentaje por nivel: 10%\n- Condiciones para aplicarse: Infligir 10 o más de daño antes de la reducción de armadura.\n- Descripción: Hace +5 de daño y aplica Expuesto durante 4 segundos, +1 segundo por cada nivel del Crit.\n- Obtenido en: Vindicator, Piglin Brutes.\n- Incompatibilidades: True Crit, Shield Crit.\n",
+"subcategories": []
+},
+{
+"title": "Vampire Crit",
+"content": "Susténtate de su vitalidad... o marchítate por su ausencia.\n- Armas: Espada, Hacha, Tridente.\n- Nivel máximo: 4\n- Porcentaje por nivel: 5%\n- Condiciones para aplicarse: Ninguna.\n- Descripción: El efecto varía dependiendo de si el enemigo es un no-muerto.\n- [ NO ES UN NO-MUERTO ]\n- Hace un 10% más de daño basado en la salud actual del enemigo, hasta un máximo de +3 de daño. Cura la mitad del daño adicional infligido.\n- [ NO-MUERTO ]\n- Tiene un 50% de probabilidad de aplicar Wither II al atacante durante 3 segundos.\n- Obtenido en: Ancient Cities, Woodland Mansions.\n- Incompatibilidades: Light Crit, Berserk Crit.\n",
+"subcategories": []
+},
+{
+"title": "Harvest Crit",
+"content": "Cosecha sus almas y su vitalidad.\n- Armas: Azada.\n- Nivel máximo: 8\n- Porcentaje: 33% (siempre el mismo).\n- Condiciones para aplicarse: Ninguna.\n- Descripción: La azada siempre hace 4 de daño en lugar de 1 en cada ataque, incluso sin activar el Crit. Hace +0.75 de daño por cada nivel.\n- Si el Crit mata al enemigo: recupera 0.25 de hambre por cada nivel, hasta un máximo de +2 muslitos. También aplica Regeneración I durante 1 segundo +0.5 segundos por nivel, hasta un máximo de 5 segundos.\n- Obtenido en: Ancient Cities.\n- Incompatibilidades: Ninguna.\n",
+"subcategories": []
+}
+]
+},
+{
+"title": "Late Game Crits",
+"content": null,
+"subcategories": [
+{
+"title": "Super Crit",
+"content": "Clava tu arma aún más profundo.\n- Armas: Espada, Hacha, Tridente, Maza.\n- Nivel máximo: 5\n- Porcentaje por nivel: 4%\n- Condiciones para aplicarse: Realizar un crítico vanilla.\n- Descripción: Realiza un crítico vanilla. Hace un 150% de daño, más un 10% adicional por cada nivel en los críticos vanilla. Aplica Debilidad durante 3 segundos.\n- Obtenido en: End Cities.\n- Incompatibilidades: Ground Crit, Smash Crit, True Crit.\n",
+"subcategories": []
+},
+{
+"title": "True Crit",
+"content": "Ninguna armadura desviará tus golpes.\n- Armas: Espada, Hacha, Tridente.\n- Nivel máximo: 5\n- Porcentaje por nivel: 5%\n- Condiciones para aplicarse: Realizar un crítico vanilla.\n- Descripción: Hace un 4% de daño verdadero adicional por nivel, hasta un máximo del 20% en el nivel 5. También hace un 0.5% de la salud máxima del enemigo como daño verdadero, hasta un máximo de +3 de daño.\n- El daño verdadero ignora todas las defensas.\n- Obtenido en: Ominous Vaults.\n- Incompatibilidades: Ground Crit, Super Crit, Smash Crit.\n",
+"subcategories": []
+},
+{
+"title": "Smash Crit",
+"content": "¿Quieres una maza en tu arma? Aquí la tienes.\n- Armas: Espada, Hacha.\n- Nivel máximo: 4\n- Porcentaje: 10% + 1% por cada bloque caído, hasta un máximo de 35% adicional.\n- Condiciones para aplicarse: Caer más de 3 bloques.\n- Descripción: Hace un 40% del daño de una maza sin encantar en función de la distancia de caída. Anula el daño por caída.\n- Obtenido en: Ominous Vaults.\n- Incompatibilidades: Super Crit, Ground Crit, True Crit.\n",
+"subcategories": []
+}
+]
+}
+]
+},
+{
+"title": "Efectos",
+"content": "Estos son importantes para entender algunos de los encantamientos anteriores, y algunos de ellos dependen en gran medida de sus respectivos Crits.",
+"subcategories": [
+{
+"title": "Efecto Pesado",
+"content": "Reduce un 10% tu velocidad y ya no puedes saltar bloques completos.",
+"subcategories": []
+},
+{
+"title": "Efecto Blindado",
+"content": "Bloquea completamente el siguiente daño recibido, reduciendo un nivel del efecto.\n\nBlindado II → Blindado I\nBlindado I → Desaparece",
+"subcategories": []
+},
+{
+"title": "Efecto Berserk",
+"content": "Mientras estás en modo Berserk, infliges un 25% más de daño en cada ataque. Si el usuario mata a un enemigo, recupera un 15% de la salud que le falta.\n\nCuando el efecto termina, aplica Debilidad, Náusea y Pesado durante 10 segundos. No puedes volver a entrar en Berserk durante 30 segundos.",
+"subcategories": []
+},
+{
+"title": "Efecto Expuesto",
+"content": "Reduce las estadísticas de armadura un 25%.",
+"subcategories": []
+},
+{
+"title": "Efecto Precisión",
+"content": "Añade un 5% de probabilidad de crítico por nivel.\n\nEste efecto tiene una poción que puede mejorarse al nivel 2 o cuya duración puede aumentarse, además de las variantes de salpicadura y persistente.\n\nSe prepara con 1 gema crítica.",
+"subcategories": []
+}
+]
+}
+]
+}

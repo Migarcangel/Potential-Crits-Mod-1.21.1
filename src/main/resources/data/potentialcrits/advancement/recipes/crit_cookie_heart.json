@@ -3,7 +3,8 @@
   "rewards": {
     "recipes": [
       "potentialcrits:crit_cookie",
-      "potentialcrits:crit_heart"
+      "potentialcrits:crit_heart",
+      "potentialcrits:crit_book"
     ]
   },
   "criteria": {

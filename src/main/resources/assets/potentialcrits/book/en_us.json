@@ -1,0 +1,177 @@
+{
+"categories": [
+{
+"title": "Introduction",
+"content": "Welcome to Potential Crits! This book will guide you through the mod's features. Click on the left or right side of the book to flip pages.",
+"subcategories": []
+},
+{
+"title": "General Info",
+"content": null,
+"subcategories": [
+{
+"title": "Mechanics",
+"content": "All of the mod crits will have a percentage chance. This means they are all based on luck, there is no guarantee of them being applied. They also have conditions that may:\n\n1. Be necessary for the crit being applied.\n2. Boost the damage.\n3. Improve probabilities of critting.\n4. A mix of the previous ones.\n\nIn order to trigger the crits, there is always the condition of dealing 4 damage or higher. This is a generous minimum but assures that you cannot spam click.",
+"subcategories": []
+},
+{
+"title": "Compatibilities",
+"content": "There are some incompatibilities within the crits. For example, fire crit and water crit. This is an attempt to achieve some “balance”. Nevertheless, most crits are compatible and you can easily have 5 crits at the same time.\n\nAll of the crits can be triggered at the same time if the conditions are met and you get lucky enough. For these cases, there is a specific order in which crits will be triggered.\n\nThis is the current order:\n\n- Super Crit (vanilla crit)\n- Fire Crit (flat damage)\n- Thunder Crit\n- Umbral Crit\n- Shield Crit\n- Berserk Crit\n- Smash Crit\n- Sunder Crit\n- Harvest Crit\n- Ice Crit\n- Water Crit (mixed damage)\n- Vampire Crit (percentage damage)\n- Dark Crit \n- Light Crit\n- Ground Crit\n- True Crit (true percentage damage)\n\nThere are crits that will apply damage independently of the base damage (+3 damage for example) and others that will apply percentage damage (+15%).\n\nThe percentage damages will always be applied later than the independent damages.\n+3 * (1 + 0.15) = 3.45. (¡+0.45 damage!)\n\nEach crit is tested to be balanced. But combinations may not be.\n\nVanilla crits, on the other hand, will always be calculated before the mod’s crits. That is why super crit is first in the list (it affects vanilla crits).",
+"subcategories": []
+},
+{
+"title": "Obtainments",
+"content": "There are currently three ways of obtaining crits:\n\n1. Random loots. Crits are treated as a treasure enchantment, so they can appear in any enchanted book that you find in chests or fishing. There is an extra possibility in strongholds libraries, so it’s worth checking them.\n2. Wandering Traders. They can (not always) sell a specific crit. You better not kill them before checking them.\n3. Specific loots. Each crit will have an specific place where to find the crits. This is to encourage players to obtain the crits and not waiting to be lucky with other methods. Additionally, encourages exploring places that you won’t normally do.",
+"subcategories": []
+}
+]
+},
+{
+"title": "List of Crits",
+"content": "Now, I will list all the crits currently available and all of their info.",
+"subcategories": [
+{
+"title": "Early Game Crits",
+"content": null,
+"subcategories": [
+{
+"title": "Water Crit",
+"content": "Become lord of the deep waters.\n- Weapons: Sword, Trident.\n- Max level: 3\n- Percentage per level: 5%\n- Conditions to apply: Being in water\n- Description: Deal +3 damage. Another +3 damage if enemy is also in water. \n- More additional damage depending on how much water is above you.\n5+ blocks= 5%\n15+ blocks = 10%\n30+ blocks = 15%\n- Obtained in: Ocean Ruins.\n- Incompatibilities: Fire Crit.\n",
+"subcategories": []
+},
+{
+"title": "Ice Crit",
+"content": "Weapons: Sword, Trident.\n- Max level: 4\n- Percentage per level: 5%. Total chance x2 if enemy’s freezing.\n- Conditions to apply: Cold biomes or enemy already freezing.\n- Description: Deals +2 damage and applies freeze to the enemy for 10 seconds. If the enemy is already freezing, it breaks their freezing and deals +5 damage.\n- Obtained in: Igloos and Strays.\n- Incompatibilities: Fire Crit.\n",
+"subcategories": []
+}
+]
+},
+{
+"title": "Early-Mid Game Crits",
+"content": null,
+"subcategories": [
+{
+"title": "Umbral Crit",
+"content": "Lurk in their shadows.\n- Weapons: Sword.\n- Max level: 3\n- Percentage per level: 10%\n- Conditions to apply: Enemy is in light level 7 or below and is not on fire.\n- Description: Applies Blindness I for 1 second per level of the enchantment (3 seconds at level 3).\nDamage, chance and duration scale with descending light level:\n7-5: 0% extra chance of crit. Deals +2 damage.\n5-2: 5% extra chance of crit. Deals +3 damage.\n1-0: 10% extra chance of crit. Deals +4 damage.\n- Obtained in: Simple Dungeons, Mineshafts.\n- Incompatibilities: Fire Crit, Thunder Crit, Light Crit.\n",
+"subcategories": []
+},
+{
+"title": "Ground Crit",
+"content": "Sink them into the ground.\n- Weapons: Sword, Axe, Pickaxe, Shovel.\n- Max level: 1\n- Percentage per level: 25%\n- Conditions to apply: Enemy and attacker are standing on ground.\n- Description: Deals 50% extra damage and gives the enemy the effect of Heavy. You no longer have the capability to do vanilla crits.\n- Obtained in: Mineshafts.\n- Incompatibilities: Super Crit, True Crit, Smash Crit.\n",
+"subcategories": []
+},
+{
+"title": "Fire Crit",
+"content": "Consume enemy’s flames and drive them deep within.\n- Weapons: Sword.\n- Max level: 2\n- Percentage per level: 5%\n- Conditions to apply: Enemy is on fire.\n- Description: It will consume the enemy's fire, converting that fire into additional damage. Each remaining second of burning will be +1 damage.\n- Obtained in: Nether Fortresses.\n- Incompatibilities: Water Crit, Umbral Crit, Ice Crit.\n",
+"subcategories": []
+}
+]
+},
+{
+"title": "Mid Game Crits",
+"content": null,
+"subcategories": [
+{
+"title": "Thunder Crit",
+"content": "Strike lightning upon your enemies.\n- Weapons: Sword, Trident.\n- Max level: 2\n- Percentage per level: 10%. 20% if thundering.\n- Conditions to apply: Enemy and attacker both exposed to the sky.\n- Description: Deals 4 damage to the target by summoning a lightning bolt. \n- Obtained in:  Enchanting Table.\n- Incompatibilities: Umbral Crit.\n",
+"subcategories": []
+},
+{
+"title": "Dark Crit",
+"content": "Drag the living into darkness.\n- Weapons: Sword, Axe, Trident, Mace.\n- Max level: 5\n- Percentage per level: 5%\n- Conditions to apply: None\n- Description: Deals 25% more damage if enemy is alive (not undead). If it is undead, it deals 12.5% less damage. Also grants DarknessI for 3 seconds.\n- Obtained in: Witches, Evokers and Ancient Cities.\n- Incompatibilities: Light Crit.\n",
+"subcategories": []
+},
+{
+"title": "Light Crit",
+"content": "Lead the dead into the light.\n- Weapons: Sword, Axe, Trident, Mace.\n- Max level: 5\n- Percentage per level: 5%\n- Conditions to apply: None\n- Description: Deals 25% more damage if enemy is undead (not alive). If it is not undead, it deals 12.5% less damage. Also grants Glowing I for 3 seconds.\n- Obtained in: Trading with Clerics.\n- Incompatibilities: Dark Crit, Umbral Crit, Vampire Crit.\n",
+"subcategories": []
+}
+]
+},
+{
+"title": "Mid-Late Game Crits",
+"content": null,
+"subcategories": [
+{
+"title": "Shield Crit",
+"content": "Make them think you are invincible.\n- Weapons: Sword, Shield, Axe.\n- Max level: 1\n- Percentage per level: 20%\n[ SWORD / AXE ]\n- Conditions to apply: None\n- Description: Deals +3 damage. Another +1 damage for each level of Shielded of the user. Grants the user Shielded 1 for 10 seconds. \n[ SHIELD ]\n- Conditions to apply: Block damage with the shield.\n- Description: Gives Shielded 1 to the user for 10 seconds. If the user already has the effect, it adds 10 seconds extra of duration.\n- Obtained in: Strongholds and Elder Guardians.\n- Incompatibilities: Berserk Crit.\n",
+"subcategories": []
+},
+{
+"title": "Berserk Crit",
+"content": "Unleash your fury from its cage.\n- Weapons: Sword, Axe.\n- Max level: 1\n- Percentage per level: 15%\n- Conditions to apply: User has less than 55% of health.\n- Description: Deals +2 damage, user loses 15% of remaining health and gains Berserk effect level 1 for 10 seconds. If User is already in berserk mode, adds 3 seconds of duration (Max 10 seconds) and +2 additional damage (+4).\n- Obtained in: Killing Piglin Brutes and Bastion Treasure.\n- Incompatibilities: Shield Crit, Vampire Crit.\n",
+"subcategories": []
+},
+{
+"title": "Sunder Crit",
+"content": "Crush their armors and their bones.\n- Weapons: Axe, Mace.\n- Max level: 4\n- Percentage per level: 10%\n- Conditions to apply: Do 10 damage or higher. (Before armor reduction)\n- Description: Deals +5 damage and enemy receives Expose debuff for 4 seconds + 1 second for each level of the crit.\n- Obtained in: Vindicator, Piglin Brutes.\n- Incompatibilities: True Crit, Shield Crit.\n",
+"subcategories": []
+},
+{
+"title": "Vampire Crit",
+"content": "Sustain from their vitality… or wither from its absence.\n- Weapons: Sword, Axe, Trident.\n- Max level: 4\n- Percentage per level: 5%\n- Conditions to apply: None\n- Description: It varies if target is undead or not.\n[ Not Undead]\nDeals +10% damage based on the current health of the enemy (max +3). \nHeals half the bonus damage dealt.\n[ Undead ]\nWith a 50% chance grants 3 seconds of wither 2 to the attackant. \n- Obtained in: Ancient Cities, Woodland Mansions.\n- Incompatibilities: Light Crit, Berserk Crit.\n",
+"subcategories": []
+},
+{
+"title": "Harvest Crit",
+"content": "Harvest their souls and vitality.\n- Weapons: Hoe.\n- Max level: 8\n- Percentage: 33%. Always stays the same.\n- Conditions to apply: None.\n- Description: Your hoe will always deal 4 damage instead of 1 on every attack, even without making a crit.\nDeals +0.75 damage per level.\n\nIf crit kills the enemy:\nRestores 0.25 hunger (shanks) per level (+2 at max).\nGrants Regeneration I for 1 second + 0.5 seconds per level (5 seconds at max).\n- Obtained in: Ancient Cities.\n- Incompatibilities: None.\n",
+"subcategories": []
+}
+]
+},
+{
+"title": "Late Game Crits",
+"content": null,
+"subcategories": [
+{
+"title": "Super Crit",
+"content": "Drive your blade even deeper.\n- Weapons: Sword, Axe, Trident, Mace.\n- Max level: 5\n- Percentage per level: 4%\n- Conditions to apply: Make a vanilla crit.\n- Description: Deals 150% (base vanilla crit) + 10% * level when making vanilla crits. \nApplies weakness for 3 seconds.\n- Obtained in: End Cities.\n- Incompatibilities: Ground Crit, Smash Crit, True Crit.\n",
+"subcategories": []
+},
+{
+"title": "True Crit",
+"content": "No armor will deflect your strikes.\n- Weapons: Sword, Axe, Trident.\n- Max level: 5\n- Percentage per level: 5%\n- Conditions to apply: Make a vanilla crit.\n- Description: Deals 4% extra true damage per level (max 20% with level 5). Also deals 0.5% of the max health of the enemy as true damage (Max +3 damage).\nTrue damage is a type of damage that ignores all the defenses of the enemy.\n- Obtained in: Ominous Vaults.\n- Incompatibilities: Ground Crit, Super Crit, Smash Crit.\n",
+"subcategories": []
+},
+{
+"title": "Smash Crit",
+"content": "Want a mace in your weapon? There you go.\n- Weapons: Sword, Axe.\n- Max level: 4\n- Percentage per level: 10%. Adds 1% extra for each block you fall. (Max +35%)\n- Conditions to apply: Falling +3 blocks\n- Description: Deals 40% damage of an unenchanted mace based on fall distance. Nullifies fall damage. \n- Obtained in: Ominous Vaults.\n- Incompatibilities: Super Crit, Ground Crit, True Crit.\n",
+"subcategories": []
+}
+]
+}
+]
+},
+{
+  "title": "Effects",
+  "content": "These are crucial to understand some of the previous enchantments listed, and some of them depend a lot on their respective crits.",
+  "subcategories": [
+    {
+      "title": "Heavy Effect",
+      "content": "Reduces 10% of your speed and you can no longer jump full blocks.",
+      "subcategories": []
+    },
+    {
+      "title": "Shielded Effect",
+      "content": "Blocks fully next incoming damage, reducing one level of the effect.\n\nShielded II -> Shielded I\nShielded I -> Disappear",
+      "subcategories": []
+    },
+    {
+      "title": "Berserk Effect",
+      "content": "When in Berserk Mode, deals 25% more damage in each attack. If the user kills an enemy, heals 15% of your missing health.\n\nWhen the effect ends, grants weakness, nausea and heavy for 10 seconds. You cannot enter Berserk again for 30 seconds.",
+      "subcategories": []
+    },
+    {
+      "title": "Exposed Effect",
+      "content": "Reduces armor stats by 25%.",
+      "subcategories": []
+    },
+    {
+      "title": "Accuracy Effect",
+      "content": "Adds 5% crit chance per level.\n\nThis effect has a potion, that can be upgraded to level 2 or have its duration extended, as well as the splash and lingering variants.\n\nIt is brewed with 1 crit gem.",
+      "subcategories": []
+    }
+  ]
+}
+]
+}

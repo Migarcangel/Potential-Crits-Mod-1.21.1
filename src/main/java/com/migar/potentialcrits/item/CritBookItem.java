@@ -1,5 +1,6 @@
 package com.migar.potentialcrits.item;
 
+import com.migar.potentialcrits.attachments.PermanentUpgrade;
 import com.migar.potentialcrits.attachments.PlayerData;
 import com.migar.potentialcrits.enchantment.crits.CritEffect;
 import com.migar.potentialcrits.enchantment.crits.CritRegistry;
@@ -11,8 +12,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import static com.migar.potentialcrits.event.EventUtils.getEnchantmentLevel;
-
 public class CritBookItem extends Item {
     public CritBookItem(Properties properties) {
         super(properties);
@@ -21,17 +20,31 @@ public class CritBookItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack itemstack = player.getItemInHand(usedHand);
+
+        if (level.isClientSide) {
+            // Lado cliente: abrir GUI si no está agachado.
+            if (!player.isShiftKeyDown()) {
+                ClientHooks.openBook();
+            }
+        } else {
+            // Lado servidor: mostrar estadísticas si está agachado.
+            if (player.isShiftKeyDown()) {
+                showStadistics(player);
+            }
+        }
+
+        return InteractionResultHolder.success(itemstack);
+    }
+
+    private void showStadistics(Player player) {
         player.displayClientMessage(
-                net.minecraft.network.chat.Component.literal(
-                        "§b§l✦ LIST OF CRITS ✦§r"
-                ),
+                Component.literal("§b§l✦ LIST OF CRITS ✦§r"),
                 false
         );
+
         int totalCrits = PlayerData.getTotalCrits(player);
         player.displayClientMessage(
-                net.minecraft.network.chat.Component.literal(
-                        "§fTotal Crits: " + totalCrits + "§r"
-                ),
+                Component.literal("§fTotal Crits: " + totalCrits + "/1000§r"),
                 false
         );
 
@@ -50,6 +63,31 @@ public class CritBookItem extends Item {
             );
         }
 
-        return InteractionResultHolder.success(itemstack);
+        player.displayClientMessage(
+                Component.literal("§a§l✦ PERMANENT UPGRADES ✦§r"),
+                false
+        );
+
+        for (PermanentUpgrade upgrade : PermanentUpgrade.values()) {
+            boolean unlocked = player.getData(upgrade.flag.get());
+
+            Component status = unlocked
+                    ? Component.literal("§a✔")
+                    : Component.literal("§c✘");
+
+            player.displayClientMessage(
+                    Component.literal("§f")
+                            .append(Component.literal(upgrade.displayName))
+                            .append(Component.literal(": "))
+                            .append(status),
+                    false
+            );
+        }
+
+        int permanentChance = PlayerData.getPermanentChance(player);
+        player.displayClientMessage(
+                Component.literal("§7Permanent Crit Chance: §e" + permanentChance + "%"),
+                false
+        );
     }
 }
